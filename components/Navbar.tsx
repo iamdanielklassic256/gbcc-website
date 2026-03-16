@@ -76,12 +76,12 @@ export default function Navbar() {
 							{link.name}
 						</Link>
 					))}
-					<Link
+					{/* <Link
 						href="/give"
 						className="bg-brand-orange hover:bg-brand-orange/90 text-white px-5 py-2 rounded-full text-sm font-semibold transition-all hover:scale-105 active:scale-95 shadow-lg shadow-brand-orange/20"
 					>
 						Give
-					</Link>
+					</Link> */}
 				</div>
 
 				{/* Mobile Toggle */}
@@ -116,13 +116,13 @@ export default function Navbar() {
 								{link.name}
 							</Link>
 						))}
-						<Link
+						{/* <Link
 							href="/give"
 							className="bg-brand-orange text-white p-4 rounded-xl text-center font-bold mt-2"
 							onClick={() => setIsMobileMenuOpen(false)}
 						>
 							Give Online
-						</Link>
+						</Link> */}
 					</motion.div>
 				)}
 			</AnimatePresence>
