@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronRight } from "lucide-react";
+import { Menu, X, ChevronRight, ChevronDown } from "lucide-react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -39,12 +39,17 @@ export default function Navbar() {
 	}, [isMobileMenuOpen]);
 
 	const navLinks = [
-		{ name: "Home", href: "/" },
 		{ name: "About", href: "/about" },
 		{ name: "Ministries", href: "/projects" },
 		{ name: "Church Plants", href: "/church-plants" },
 		{ name: "Sermons", href: "/sermons" },
-		{ name: "Blogs", href: "/events" },
+		{ 
+			name: "News", 
+			subLinks: [
+				{ name: "Upcoming Events", href: "/events" },
+				{ name: "Blogs", href: "/blogs" },
+			]
+		},
 		{ name: "Contact", href: "/contact" },
 	];
 
@@ -95,32 +100,81 @@ export default function Navbar() {
 					{/* Desktop Navigation */}
 					<ul className="hidden lg:flex items-center justify-center absolute left-1/2 -translate-x-1/2 gap-1 rounded-full px-2 py-1.5 transition-all duration-300 m-0 list-none">
 						{navLinks.map((link) => {
-							const isActive = pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/');
+							const isActive = link.href 
+								? pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/')
+								: link.subLinks?.some(sub => pathname === sub.href || pathname.startsWith(sub.href));
 							
 							return (
-								<li key={link.name}>
-									<Link
-										href={link.href}
-										className="relative px-4 py-2 rounded-full text-sm font-semibold transition-all group block"
-									>
-										{isActive && (
-											<motion.div 
-												layoutId="nav-pill"
-												className="absolute inset-0 bg-brand-orange/10 dark:bg-brand-orange/20 rounded-full z-0"
-												transition={{ type: "spring", stiffness: 300, damping: 30 }}
-											/>
-										)}
-										<span className={cn(
-											"relative z-10 transition-colors duration-200",
-											isActive 
-												? "text-brand-orange" 
-												: isScrolled 
-													? "text-slate-600 dark:text-slate-300 hover:text-brand-orange" 
-													: "text-white/90 hover:text-white"
-										)}>
-											{link.name}
-										</span>
-									</Link>
+								<li key={link.name} className="relative group/navitem">
+									{link.href ? (
+										<Link
+											href={link.href}
+											className="relative px-4 py-2 rounded-full text-sm font-semibold transition-all group block"
+										>
+											{isActive && (
+												<motion.div 
+													layoutId="nav-pill"
+													className="absolute inset-0 bg-brand-orange/10 dark:bg-brand-orange/20 rounded-full z-0"
+													transition={{ type: "spring", stiffness: 300, damping: 30 }}
+												/>
+											)}
+											<span className={cn(
+												"relative z-10 transition-colors duration-200",
+												isActive 
+													? "text-brand-orange" 
+													: isScrolled 
+														? "text-slate-600 dark:text-slate-300 hover:text-brand-orange" 
+														: "text-white/90 hover:text-white"
+											)}>
+												{link.name}
+											</span>
+										</Link>
+									) : (
+										<div className="relative cursor-pointer px-4 py-2 rounded-full text-sm font-semibold transition-all flex items-center gap-1 group">
+											{isActive && (
+												<motion.div 
+													layoutId="nav-pill"
+													className="absolute inset-0 bg-brand-orange/10 dark:bg-brand-orange/20 rounded-full z-0"
+													transition={{ type: "spring", stiffness: 300, damping: 30 }}
+												/>
+											)}
+											<span className={cn(
+												"relative z-10 transition-colors duration-200",
+												isActive 
+													? "text-brand-orange" 
+													: isScrolled 
+														? "text-slate-600 dark:text-slate-300 hover:text-brand-orange" 
+														: "text-white/90 hover:text-white"
+											)}>
+												{link.name}
+											</span>
+											<ChevronDown size={14} className={cn(
+												"relative z-10 transition-transform duration-200 group-hover/navitem:rotate-180",
+												isActive ? "text-brand-orange" : isScrolled ? "text-slate-600 dark:text-slate-300" : "text-white/90"
+											)} />
+
+											{/* Dropdown Menu */}
+											<div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 translate-y-2 pointer-events-none group-hover/navitem:opacity-100 group-hover/navitem:translate-y-0 group-hover/navitem:pointer-events-auto transition-all duration-300 z-50 min-w-[200px]">
+												<div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 p-2 flex flex-col gap-1 overflow-hidden">
+													{link.subLinks?.map((sub) => {
+														const isSubActive = pathname === sub.href;
+														return (
+															<Link
+																key={sub.name}
+																href={sub.href}
+																className={cn(
+																	"px-4 py-3 rounded-xl text-sm font-medium transition-colors hover:bg-slate-50 dark:hover:bg-slate-800",
+																	isSubActive ? "text-brand-orange bg-brand-orange/5 dark:bg-brand-orange/10" : "text-slate-700 dark:text-slate-300"
+																)}
+															>
+																{sub.name}
+															</Link>
+														);
+													})}
+												</div>
+											</div>
+										</div>
+									)}
 								</li>
 							);
 						})}
@@ -152,7 +206,9 @@ export default function Navbar() {
 						>
 							<ul className="flex-1 overflow-y-auto flex flex-col gap-6 w-full max-w-sm mx-auto list-none m-0 p-0">
 								{navLinks.map((link, i) => {
-									const isActive = pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/');
+									const isActive = link.href 
+										? pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/')
+										: link.subLinks?.some(sub => pathname === sub.href || pathname.startsWith(sub.href));
 									
 									return (
 										<motion.li 
@@ -160,20 +216,54 @@ export default function Navbar() {
 											initial={{ opacity: 0, x: -20 }}
 											animate={{ opacity: 1, x: 0 }}
 											transition={{ delay: i * 0.05 + 0.1, duration: 0.3 }}
+											className="flex flex-col gap-2"
 										>
-											<Link
-												href={link.href}
-												className={cn(
-													"flex items-center justify-between py-3 px-4 rounded-2xl text-xl font-bold transition-all active:scale-95",
-													isActive 
-														? "bg-brand-orange/10 text-brand-orange" 
-														: "text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-brand-orange"
-												)}
-												onClick={() => setIsMobileMenuOpen(false)}
-											>
-												{link.name}
-												<ChevronRight size={20} className={cn("transition-all", isActive ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4")} />
-											</Link>
+											{link.href ? (
+												<Link
+													href={link.href}
+													className={cn(
+														"flex items-center justify-between py-3 px-4 rounded-2xl text-xl font-bold transition-all active:scale-95",
+														isActive 
+															? "bg-brand-orange/10 text-brand-orange" 
+															: "text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-brand-orange"
+													)}
+													onClick={() => setIsMobileMenuOpen(false)}
+												>
+													{link.name}
+													<ChevronRight size={20} className={cn("transition-all", isActive ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4")} />
+												</Link>
+											) : (
+												<div className="flex flex-col gap-2">
+													<div className="flex items-center justify-between py-3 px-4 rounded-2xl text-xl font-bold text-slate-800 dark:text-slate-200">
+														{link.name}
+													</div>
+													<ul className="flex flex-col gap-2 pl-4">
+														{link.subLinks?.map((sub) => {
+															const isSubActive = pathname === sub.href;
+															return (
+																<li key={sub.name}>
+																	<Link
+																		href={sub.href}
+																		className={cn(
+																			"flex items-center justify-between py-3 px-4 rounded-xl text-lg font-semibold transition-all active:scale-95",
+																			isSubActive 
+																				? "bg-brand-orange/10 text-brand-orange" 
+																				: "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-brand-orange"
+																		)}
+																		onClick={() => setIsMobileMenuOpen(false)}
+																	>
+																		<span className="flex items-center gap-3">
+																			<div className={cn("w-1.5 h-1.5 rounded-full transition-colors", isSubActive ? "bg-brand-orange" : "bg-slate-300 dark:bg-slate-700")} />
+																			{sub.name}
+																		</span>
+																		<ChevronRight size={18} className={cn("transition-all", isSubActive ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4")} />
+																	</Link>
+																</li>
+															);
+														})}
+													</ul>
+												</div>
+											)}
 										</motion.li>
 									);
 								})}
