@@ -75,5 +75,4 @@ const GettingStarted = () => {
 		</section>
 	)
 }
-
 export default GettingStarted
