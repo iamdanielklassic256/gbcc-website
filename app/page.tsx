@@ -29,6 +29,7 @@ import { fadeUp, stagger } from "@/utils/animation";
 import GettingStarted from "@/components/home/GettingStarted";
 import CoreIdentity from "@/components/home/CoreIdentity";
 import UpdateSection from "@/components/home/UpdateSection";
+import SermonSection from "@/components/home/SermonSection";
 
 /* ─── Types ─── */
 interface EventItem {
@@ -125,81 +126,7 @@ export default function Home() {
 			<GettingStarted />
 			<CoreIdentity />
 			<UpdateSection />
-
-			{/* ═══════════════════════════════════════════════
-			    6. SERMONS / MESSAGES SECTION
-			═══════════════════════════════════════════════ */}
-			{/* <section className="py-20 sm:py-28 px-4 sm:px-6">
-				<div className="max-w-6xl mx-auto">
-					<motion.div
-						initial="hidden"
-						whileInView="visible"
-						viewport={{ once: true }}
-						variants={stagger}
-						className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-14"
-					>
-						<div>
-							<motion.span
-								variants={fadeUp}
-								className="text-brand-orange font-bold uppercase tracking-[0.2em] text-sm mb-4 block"
-							>
-								Recent Messages
-							</motion.span>
-							<motion.h2 variants={fadeUp} className="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white leading-tight">
-								Feed Your Soul with the <span className="text-brand-blue">Truth</span>
-							</motion.h2>
-						</div>
-						<motion.div variants={fadeUp}>
-							<Link
-								href="/sermons"
-								className="text-brand-orange font-bold flex items-center gap-2 hover:gap-3 transition-all text-sm border-b-2 border-brand-orange/20 hover:border-brand-orange pb-1"
-							>
-								More Sermons <ArrowRight size={16} />
-							</Link>
-						</motion.div>
-					</motion.div>
-
-					<motion.div
-						initial="hidden"
-						whileInView="visible"
-						viewport={{ once: true }}
-						variants={stagger}
-						className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
-					>
-						{sermons.map((sermon, idx) => (
-							<motion.div
-								key={idx}
-								variants={fadeUp}
-								className="group bg-white dark:bg-slate-900 rounded-[24px] overflow-hidden border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-brand-orange/20 transition-all duration-500 hover:-translate-y-1"
-							>
-								<div className="relative h-[220px] overflow-hidden">
-									<Image src={sermon.image} alt={sermon.title} fill className="object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out" />
-									<div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
-									<div className="absolute top-4 left-4">
-										<span className="bg-brand-orange text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
-											{sermon.category}
-										</span>
-									</div>
-									<div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-										<div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30 scale-0 group-hover:scale-100 transition-transform duration-500">
-											<Play fill="white" size={22} />
-										</div>
-									</div>
-								</div>
-								<div className="p-6">
-									<div className="flex items-center gap-2 text-xs text-slate-400 dark:text-slate-500 font-medium mb-3">
-										<User size={12} />
-										<span>{sermon.speaker}</span>
-									</div>
-									<h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-brand-orange transition-colors leading-snug">
-										{sermon.title}
-									</h3>
-								</div>
-							</motion.div>
-						))}
-					</motion.div>
-				</div>
-			</section> */}
+			<SermonSection />
 
 			{/* ═══════════════════════════════════════════════
 			    7. EVENTS SECTION (Dynamic from API)

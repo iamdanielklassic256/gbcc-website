@@ -42,7 +42,7 @@ export default function Navbar() {
 		// { name: "About", href: "/about" },
 		// { name: "Ministries", href: "/projects" },
 		// { name: "Church Plants", href: "/church-plants" },
-		// { name: "Sermons", href: "/sermons" },
+		{ name: "Sermons", href: "/sermons" },
 		{ 
 			name: "News", 
 			subLinks: [
