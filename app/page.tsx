@@ -121,10 +121,10 @@ export default function Home() {
 	return (
 		<main className="min-h-screen bg-white dark:bg-[#020617]">
 			<Navbar />
-      <HeroSection />
+			<HeroSection />
 			<GettingStarted />
-      <CoreIdentity />
-      {/* <UpdateSection /> */}
+			<CoreIdentity />
+			<UpdateSection />
 
 			{/* ═══════════════════════════════════════════════
 			    6. SERMONS / MESSAGES SECTION
