@@ -52,9 +52,19 @@ export const metadata: Metadata = {
   title: {
     default: "Gulu Bible Community Church - GBCC | Knowing Christ and Making Him Known",
     template: "%s | Gulu Bible Community Church",
+    
   },
   description: "Welcome to Gulu Bible Community Church. With God all things are possible. Join us for worship, community, and the word of God in Gulu, Uganda.",
   keywords: ["Church in Gulu", "Gulu Bible Community Church", "GBCC", "Uganda Church", "Christianity in Gulu", "Bible Church Uganda"],
+  icons: {
+    icon: [
+      { url: "/logo.png", type: "image/png" },
+    ],
+    apple: [
+      { url: "/logo.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/logo.png",
+  },
   openGraph: {
     title: "Gulu Bible Community Church - GBCC",
     description: "Welcome to Gulu Bible Community Church. With God all things are possible. Join us for worship, community, and the word of God in Gulu, Uganda.",
@@ -62,11 +72,20 @@ export const metadata: Metadata = {
     siteName: "Gulu Bible Community Church",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/logo.png",
+        width: 512,
+        height: 512,
+        alt: "Gulu Bible Community Church Logo",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Gulu Bible Community Church",
     description: "Welcome to Gulu Bible Community Church in Gulu, Uganda.",
+    images: ["/logo.png"],
   },
   alternates: {
     canonical: "/",
