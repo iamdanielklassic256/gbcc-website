@@ -3,6 +3,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import {
 	Calendar,
@@ -249,8 +250,9 @@ export default function EventsPage() {
 												className="group relative"
 											>
 												{/* Card */}
-												<div className="relative bg-white dark:bg-slate-900 rounded-[24px] border border-slate-200/80 dark:border-slate-800 hover:border-brand-orange/25 shadow-sm hover:shadow-xl hover:shadow-slate-200/60 dark:hover:shadow-brand-orange/5 transition-all duration-500 overflow-hidden">
-													<div className="flex flex-col md:flex-row">
+												<Link href={`/events/${event.id}`} className="block w-full">
+													<div className="relative bg-white dark:bg-slate-900 rounded-[24px] border border-slate-200/80 dark:border-slate-800 hover:border-brand-orange/25 shadow-sm hover:shadow-xl hover:shadow-slate-200/60 dark:hover:shadow-brand-orange/5 transition-all duration-500 overflow-hidden cursor-pointer">
+														<div className="flex flex-col md:flex-row">
 														{/* ── Date Column ── */}
 														<div className="hidden md:flex flex-col items-center justify-start pt-8 pb-8 px-6 min-w-[104px] border-r border-slate-100 dark:border-slate-800 relative">
 															{/* Timeline dot */}
@@ -344,6 +346,7 @@ export default function EventsPage() {
 														</div>
 													</div>
 												</div>
+												</Link>
 											</motion.article>
 										);
 									})}
