@@ -50,7 +50,8 @@ export default function BlogsPage() {
 				const res = await fetch(`${apiUrl}/blogs`);
 				if (!res.ok) throw new Error("Failed to fetch blogs");
 				const data = await res.json();
-				setPosts(data);
+				const publishedData = data.filter((p: BlogPost) => p.status === "published");
+				setPosts(publishedData);
 			} catch (err) {
 				console.error(err);
 				setError("Failed to load blog posts.");
@@ -395,7 +396,7 @@ export default function BlogsPage() {
 													<div className="flex items-center gap-3 text-xs text-slate-400 dark:text-slate-500 font-medium mb-3">
 														<span className="flex items-center gap-1">
 															<Calendar size={12} />
-															{formatDate(post.publishedAt || post.createdAt)}
+															{formatDate(post.createdAt)}
 														</span>
 														<span className="text-slate-200 dark:text-slate-700">•</span>
 														<span className="flex items-center gap-1">
@@ -415,20 +416,13 @@ export default function BlogsPage() {
 													</p>
 
 													{/* Footer */}
-													<div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
-														<div className="flex items-center gap-2">
-															<div className="w-7 h-7 rounded-full bg-brand-orange/10 flex items-center justify-center">
-																<User size={14} className="text-brand-orange" />
-															</div>
-															<span className="text-xs font-semibold text-slate-600 dark:text-slate-400">
-																{post.author}
-															</span>
-														</div>
-														<span className="text-brand-orange font-bold text-sm flex items-center gap-1 group-hover:gap-2 transition-all duration-300">
-															Read
-															<ArrowRight size={14} />
-														</span>
-													</div>
+													<div className="pt-5 border-t border-slate-100 dark:border-slate-800 ">
+											
+											<div className="flex flex-row items-center justify-center gap-2 text-white font-bold bg-orange-600 p-1 rounded-lg">
+												Read
+												<ArrowRight size={14} />
+											</div>
+										</div>
 												</div>
 											</Link>
 										</motion.article>

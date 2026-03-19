@@ -23,6 +23,10 @@ const nextConfig: NextConfig = {
         protocol: 'http',
         hostname: 'localhost',
       },
+      {
+        protocol: 'https',
+        hostname: 'prochurchmanager-bucket.s3.af-south-1.amazonaws.com',
+      },
     ],
   },
 };
