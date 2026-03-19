@@ -39,7 +39,7 @@ export default function Navbar() {
 	}, [isMobileMenuOpen]);
 
 	const navLinks = [
-		// { name: "About", href: "/about" },
+		{ name: "About", href: "/about" },
 		// { name: "Ministries", href: "/projects" },
 		// { name: "Church Plants", href: "/church-plants" },
 		{ name: "Sermons", href: "/sermons" },

@@ -16,7 +16,11 @@ import {
 	BookOpen,
 	Eye,
 	Tag,
+	MessageSquare,
+	Send,
+	AlertCircle,
 } from "lucide-react";
+import { useState, useEffect } from "react";
 
 interface BlogPost {
 	id: string;
@@ -70,6 +74,72 @@ export default function BlogClientPage({ post, relatedPosts }: { post: BlogPost;
 	};
 
 	const tags = post.tags ? post.tags.split(",").map((t) => t.trim()).filter(Boolean) : [];
+
+	// --- Comment Section Logic ---
+	interface Comment {
+		id: string;
+		message: string;
+		createdAt: string;
+	}
+
+	const [comments, setComments] = useState<Comment[]>([]);
+	const [newComment, setNewComment] = useState("");
+	const [isPosting, setIsPosting] = useState(false);
+	const [isLoadingComments, setIsLoadingComments] = useState(true);
+	const [error, setError] = useState<string | null>(null);
+
+	const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4005/api/v1";
+
+	const fetchComments = async () => {
+		try {
+			setIsLoadingComments(true);
+			const res = await fetch(`${apiUrl}/comments?blogId=${post.id}`);
+			if (!res.ok) throw new Error("Failed to load comments");
+			const json = await res.json();
+			// JSON format based on backend is { data: CommentEntity[], meta: ... }
+			setComments(json.data || []);
+		} catch (err) {
+			console.error("Comment fetch failed:", err);
+		} finally {
+			setIsLoadingComments(false);
+		}
+	};
+
+	useEffect(() => {
+		fetchComments();
+	}, [post.id]);
+
+	const handlePostComment = async (e: React.FormEvent) => {
+		e.preventDefault();
+		if (!newComment.trim()) return;
+		
+		setIsPosting(true);
+		setError(null);
+
+		try {
+			const res = await fetch(`${apiUrl}/comments`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"accept": "application/json"
+				},
+				body: JSON.stringify({
+					blogId: post.id,
+					message: newComment
+				})
+			});
+
+			if (!res.ok) throw new Error("Failed to post comment");
+			
+			// Refresh comments after successful post
+			await fetchComments();
+			setNewComment("");
+		} catch (err: any) {
+			setError(err.message || "Something went wrong. Please try again.");
+		} finally {
+			setIsPosting(false);
+		}
+	};
 
 	return (
 		<main className="min-h-screen bg-slate-50 dark:bg-[#020617]">
@@ -213,6 +283,86 @@ export default function BlogClientPage({ post, relatedPosts }: { post: BlogPost;
 									<Twitter size={18} />
 								</button>
 							</div>
+						</div>
+					</motion.div>
+
+					{/* ─── CommentSection ─── */}
+					<motion.div
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.5, delay: 0.3 }}
+						className="bg-white dark:bg-slate-900 rounded-[28px] border border-slate-200/80 dark:border-slate-800 shadow-xl p-6 sm:p-8 md:p-12 mb-12"
+					>
+						<div className="flex items-center gap-3 mb-8">
+							<div className="w-10 h-10 rounded-xl bg-brand-blue/10 flex items-center justify-center text-brand-blue">
+								<MessageSquare size={20} />
+							</div>
+							<h3 className="text-xl font-extrabold text-slate-900 dark:text-white">
+								Thoughts & Reflections <span className="text-slate-400 font-medium ml-2 text-sm">({comments.length})</span>
+							</h3>
+						</div>
+
+						{/* Comment Form */}
+						<form onSubmit={handlePostComment} className="mb-12">
+							<div className="relative group">
+								<textarea
+									value={newComment}
+									onChange={(e) => setNewComment(e.target.value)}
+									placeholder="Write your thought here..."
+									className={`w-full bg-slate-50 dark:bg-slate-800/50 border ${error ? 'border-red-500/50' : 'border-slate-200 dark:border-slate-700'} rounded-2xl p-4 sm:p-6 text-slate-700 dark:text-slate-200 placeholder:text-slate-400 outline-none focus:ring-2 ${error ? 'focus:ring-red-500/20' : 'focus:ring-brand-orange/40'} focus:border-brand-orange transition-all resize-none min-h-[120px]`}
+									required
+								/>
+								<div className="absolute bottom-4 right-4 flex flex-col items-end gap-2">
+									{error && (
+										<span className="text-[10px] sm:text-xs font-bold text-red-500 flex items-center gap-1 bg-white dark:bg-slate-900 px-2 py-1 rounded shadow-sm">
+											<AlertCircle size={10} /> {error}
+										</span>
+									)}
+									<button
+										type="submit"
+										disabled={isPosting || !newComment.trim()}
+										className="bg-brand-orange hover:bg-brand-orange/90 disabled:opacity-50 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-brand-orange/25 hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center gap-2 group/btn"
+									>
+										{isPosting ? "Posting..." : "Post Reflection"}
+										<Send size={15} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+									</button>
+								</div>
+							</div>
+						</form>
+
+						{/* Comments List */}
+						<div className="space-y-6">
+							{isLoadingComments ? (
+								<div className="flex flex-col items-center justify-center py-10 opacity-30">
+									<motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }}>
+										<MessageSquare size={30} />
+									</motion.div>
+									<p className="text-xs font-bold mt-3 uppercase tracking-widest">Gathering thoughts...</p>
+								</div>
+							) : comments.length > 0 ? (
+								comments.map((comment, idx) => (
+									<motion.div
+										key={comment.id || idx}
+										initial={{ opacity: 0, x: -10 }}
+										animate={{ opacity: 1, x: 0 }}
+										className="p-5 sm:p-6 bg-slate-50/50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-700/50 rounded-2xl relative overflow-hidden group/comment"
+									>
+										<div className="absolute left-0 top-0 bottom-0 w-1 bg-brand-blue group-hover/comment:bg-brand-orange transition-colors duration-500" />
+										<p className="text-slate-600 dark:text-slate-300 leading-relaxed text-[15px]">
+											{comment.message}
+										</p>
+										<div className="mt-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+											<span>Faithful Reader</span>
+											<span>•</span>
+											<span>{comment.createdAt ? new Date(comment.createdAt).toLocaleDateString() : 'Just now'}</span>
+										</div>
+									</motion.div>
+								))
+							) : (
+								<div className="text-center py-12 border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-3xl">
+									<p className="text-slate-400 font-medium italic">Be the first to share a thought.</p>
+								</div>
+							)}
 						</div>
 					</motion.div>
 
