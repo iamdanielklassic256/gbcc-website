@@ -5,40 +5,34 @@ import Footer from "@/components/Footer";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { GraduationCap, Heart, Rocket, Globe, ExternalLink } from "lucide-react";
+import empower from '@/assets/projects/empowering.jpeg'
+import students from '@/assets/projects/empower.jpg'
 
 export default function ProjectsPage() {
 	const projects = [
-		{
-			name: "Hope of Glory Christian School",
-			description: "A transformative educational sanctuary where academic excellence meets spiritual formation, empowering children to become future leaders.",
-			icon: <GraduationCap size={28} />,
-			image: "https://images.unsplash.com/photo-1509062522246-37324d5927ad?q=80&w=800",
-			focus: ["Christian Curriculum", "Character Development", "Leadership Training"]
-		},
-		{
-			name: "Gulu Child Development Program",
-			description: "A compassionate initiative dedicated to healing and empowering communities, providing support to vulnerable children and families.",
-			icon: <Heart size={28} />,
-			image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=800",
-			focus: ["Trauma-Informed Care", "Community Resilience", "Family Support"]
-		},
-		{
-			name: "Renew Child Development Program",
-			description: "An innovative program creating sustainable pathways for child empowerment, focusing on healthcare and education.",
-			icon: <Rocket size={28} />,
-			image: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=800",
-			website: "https://renewgulu.reachapp.co",
-			focus: ["Preventative Healthcare", "Educational Scholarships", "Economic Empowerment"]
-		},
-		{
-			name: "Empowering Ugandans Training",
-			description: "A community development initiative bridging economic opportunities, skills training, and spiritual guidance.",
-			icon: <Globe size={28} />,
-			image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=800",
-			website: "https://empoweringugandans.org",
-			focus: ["Basic Computer Training", "Sewing Training", "Discipleship Class"]
-		}
-	];
+	{
+		name: "Hope of Glory Christian School",
+		description: "A Christ-centered school offering Nursery and Primary education, dedicated to nurturing young minds through academic excellence, strong moral values, and spiritual growth.",
+		focus: ["Nursery & Primary Education", "Christian Values", "Holistic Child Development"]
+	},
+	{
+		name: "Gulu Child Development Program",
+		description: "A child sponsorship program committed to supporting vulnerable children through education from nursery to university, while strengthening families and communities.",
+		focus: ["Child Sponsorship", "Education Support", "Community & Family Empowerment"]
+	},
+	{
+		name: "Renew Child Development Program",
+		description: "A holistic child sponsorship initiative empowering children from nursery to university through education, healthcare, and long-term community development.",
+		website: "https://www.renewgulu.org/",
+		focus: ["Education Sponsorship", "Healthcare Support", "Sustainable Community Development"]
+	},
+	{
+		name: "Empowering Ugandans Training",
+		description: "A life-changing initiative equipping individuals with practical skills and spiritual guidance through programs in computer training, tailoring, and discipleship.",
+		website: "https://empoweringugandans.org",
+		focus: ["Computer Skills Training", "Sewing & Tailoring", "Discipleship & Life Skills"]
+	}
+];
 
 	return (
 		<main className="min-h-screen">
@@ -47,8 +41,8 @@ export default function ProjectsPage() {
 			<section className="relative h-[50vh] min-h-[400px] w-full flex items-center justify-center overflow-hidden">
 				<div className="absolute inset-0 z-0">
 					<Image
-						src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?q=80&w=1200"
-						alt="Ministries"
+						src={students}
+						alt="Projects"
 						fill
 						className="object-cover"
 					/>
@@ -60,7 +54,7 @@ export default function ProjectsPage() {
 						animate={{ opacity: 1, y: 0 }}
 						className="text-5xl md:text-7xl font-bold text-white mb-4"
 					>
-						Our <span className="text-brand-orange">Ministries</span>
+						Our <span className="text-brand-orange">Projects</span>
 					</motion.h1>
 					<p className="text-white/70 text-lg max-w-2xl mx-auto">
 						Holistic sustainable transformation and development through Christ-centered initiatives.
@@ -78,18 +72,7 @@ export default function ProjectsPage() {
 							viewport={{ once: true }}
 							className="bg-white dark:bg-slate-900 rounded-[3rem] overflow-hidden shadow-2xl border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row h-full group"
 						>
-							<div className="md:w-2/5 relative h-64 md:h-auto overflow-hidden">
-								<Image
-									src={project.image}
-									alt={project.name}
-									fill
-									className="object-cover group-hover:scale-105 transition-transform duration-700"
-								/>
-							</div>
-							<div className="md:w-3/5 p-8 md:p-10 flex flex-col">
-								<div className="w-14 h-14 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center mb-6">
-									{project.icon}
-								</div>
+							<div className=" p-8 md:p-10 flex flex-col">
 								<h2 className="text-2xl md:text-3xl font-bold mb-4">{project.name}</h2>
 								<p className="text-foreground/60 text-sm mb-6 leading-relaxed flex-grow">
 									{project.description}

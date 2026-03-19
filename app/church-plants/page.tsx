@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { MapPin, User, Calendar, Users } from "lucide-react";
 
 export default function ChurchPlantsPage() {
@@ -99,21 +100,6 @@ export default function ChurchPlantsPage() {
 									<p className="text-foreground/60 text-sm mb-8 leading-relaxed">
 										{plant.description}
 									</p>
-									<div className="space-y-4 pt-6 border-t border-slate-100 dark:border-slate-700">
-										<div className="flex items-center justify-between">
-											<div className="flex items-center gap-3 text-sm font-medium text-foreground/70">
-												<User size={16} className="text-brand-blue" />
-												{plant.pastor}
-											</div>
-											<div className="flex items-center gap-2 text-xs font-bold text-brand-orange bg-brand-orange/5 px-3 py-1 rounded-full">
-												<Calendar size={12} /> EST. {plant.established}
-											</div>
-										</div>
-										<div className="flex items-center gap-3 text-sm font-medium text-foreground/70">
-											<Users size={16} className="text-brand-blue" />
-											{plant.members} Active Members
-										</div>
-									</div>
 								</div>
 							</motion.div>
 						))}
@@ -121,13 +107,13 @@ export default function ChurchPlantsPage() {
 
 					<div className="mt-20 p-12 bg-brand-blue rounded-[3rem] text-center text-white relative overflow-hidden">
 						<div className="absolute top-0 left-0 w-64 h-64 bg-white/10 blur-[100px] -translate-x-1/2 -translate-y-1/2" />
-						<h2 className="text-3xl md:text-4xl font-bold mb-6">Our Goal: 100 Church Plants</h2>
+						<h2 className="text-3xl md:text-4xl font-bold mb-6 italic underline uppercase tracking-tighter decoration-brand-orange underline-offset-8">Our Goal: 1000 Churches & 1000 Leaders</h2>
 						<p className="text-white/70 max-w-2xl mx-auto mb-8 text-lg">
-							We are on a journey to plant 100 gospel-centered churches in Northern Uganda and beyond. Join us in this mission.
+							We are on a journey to plant 1000 gospel-centered churches and equip 1000 leaders in Northern Uganda and beyond. Join us in this mission.
 						</p>
-						<button className="bg-brand-orange hover:bg-brand-orange/90 text-white px-10 py-4 rounded-full font-bold shadow-xl shadow-brand-orange/20 transition-all hover:scale-105">
+						<Link href="/contact" className="inline-block bg-brand-orange hover:bg-brand-orange/90 text-white px-10 py-4 rounded-full font-bold shadow-xl shadow-brand-orange/20 transition-all hover:scale-105">
 							Partner with Us
-						</button>
+						</Link>
 					</div>
 				</div>
 			</section>

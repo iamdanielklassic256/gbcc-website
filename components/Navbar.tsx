@@ -40,8 +40,9 @@ export default function Navbar() {
 
 	const navLinks = [
 		{ name: "About", href: "/about" },
-		// { name: "Ministries", href: "/projects" },
-		// { name: "Church Plants", href: "/church-plants" },
+		{ name: "Ministries", href: "/church-ministries" },
+		{ name: "Projects", href: "/projects" },
+		{ name: "Church Plants", href: "/church-plants" },
 		{ name: "Sermons", href: "/sermons" },
 		{ 
 			name: "News", 
@@ -63,7 +64,7 @@ export default function Navbar() {
 						: "bg-transparent py-5"
 				)}
 			>
-				<div className="max-w-7xl mx-auto flex items-center justify-between">
+				<div className="flex items-center justify-between">
 					{/* Logo & Brand */}
 					<Link href="/" className="flex items-center gap-3 z-50 relative group">
 						<div className="relative w-12 h-12 overflow-hidden rounded-full ring-2 ring-brand-orange/20 p-1 group-hover:ring-brand-orange/50 transition-all duration-300 bg-white shadow-sm">
@@ -75,30 +76,10 @@ export default function Navbar() {
 								className="object-contain group-hover:scale-105 transition-transform duration-300"
 							/>
 						</div>
-						<div className="flex flex-col">
-							<span className={cn(
-								"font-extrabold text-[15px] sm:text-lg tracking-tight leading-none hidden sm:block transition-colors duration-300",
-								isScrolled ? "text-slate-900 dark:text-white" : "text-white"
-							)}>
-								GULU BIBLE
-							</span>
-							<span className={cn(
-								"font-extrabold text-[15px] sm:text-lg tracking-tight leading-none hidden sm:block transition-colors duration-300",
-								isScrolled ? "text-slate-900 dark:text-white" : "text-white"
-							)}>
-								COMMUNITY CHURCH
-							</span>
-							{/* <span className={cn(
-								"font-bold text-[11px] sm:text-xs tracking-wider uppercase hidden sm:block transition-colors duration-300",
-								isScrolled ? "text-brand-orange" : "text-white/80"
-							)}>
-								Community Church
-							</span> */}
-						</div>
 					</Link>
 
 					{/* Desktop Navigation */}
-					<ul className="hidden lg:flex items-center justify-center absolute left-1/2 -translate-x-1/2 gap-1 rounded-full px-2 py-1.5 transition-all duration-300 m-0 list-none">
+					<ul className="hidden lg:flex items-center justify-center absolute left-1/2 -translate-x-1/2 gap-1 rounded-full px-2 py-1.5 transition-all duration-300 m-0 list-none whitespace-nowrap">
 						{navLinks.map((link) => {
 							const isActive = link.href 
 								? pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/')
@@ -109,7 +90,7 @@ export default function Navbar() {
 									{link.href ? (
 										<Link
 											href={link.href}
-											className="relative px-4 py-2 rounded-full text-sm font-semibold transition-all group block"
+											className="relative px-4 py-2 rounded-full text-sm font-semibold transition-all group block whitespace-nowrap"
 										>
 											{isActive && (
 												<motion.div 
@@ -130,7 +111,7 @@ export default function Navbar() {
 											</span>
 										</Link>
 									) : (
-										<div className="relative cursor-pointer px-4 py-2 rounded-full text-sm font-semibold transition-all flex items-center gap-1 group">
+										<div className="relative cursor-pointer px-4 py-2 rounded-full text-sm font-semibold transition-all flex items-center gap-1 group whitespace-nowrap">
 											{isActive && (
 												<motion.div 
 													layoutId="nav-pill"

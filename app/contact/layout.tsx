@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import contactbanner from '@/assets/images/about/contactbanner.jpg'
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -11,10 +12,10 @@ export const metadata: Metadata = {
     // Simply place a "contact-og.jpg" inside your public folder.
     images: [
       {
-        url: "/contact-og.jpg", // Create this image in the /public folder
+        url: contactbanner.src, 
         width: 1200,
         height: 630,
-        alt: "Gulu Bible Community Church Contact Page",
+        alt: "Gulu Bible Community Church Community",
       },
     ],
   },
@@ -22,8 +23,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Contact Gulu Bible Community Church",
     description: "Reach out to us today. We would love to hear from you.",
-    // Same for Twitter shares
-    images: ["/contact-og.jpg"],
+    images: ["/community.png"],
   },
 };
 
