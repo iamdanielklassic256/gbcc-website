@@ -37,14 +37,22 @@ async function getBlogs(): Promise<BlogPost[]> {
 	}
 }
 
+function toOgImageUrl(coverImage: string | null | undefined): string | null {
+	if (!coverImage) return null;
+	const isGoogleHosted =
+		coverImage.includes('drive.google.com') ||
+		coverImage.includes('googleusercontent.com');
+	if (isGoogleHosted) {
+		return `https://www.gulubcc.org/api/og-image?url=${encodeURIComponent(coverImage)}`;
+	}
+	return coverImage;
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
 	// Await the params object in Next.js 15+ 
 	const { slug } = await params;
 	const decodedSlug = decodeURIComponent(slug);
-	
-	// Provide generic metadata fallback
-	const fallbackImage = 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=1200';
-	
+
 	const allBlogs = await getBlogs();
 	const post = allBlogs.find((b) => b.slug.toLowerCase() === decodedSlug.toLowerCase());
 
@@ -55,7 +63,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 		};
 	}
 
-	const ogImage = post.coverImage || fallbackImage;
+	const ogImage = toOgImageUrl(post.coverImage);
 
 	return {
 		title: `${post.title} | GBCC Blogs`,
@@ -65,14 +73,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 			description: post.excerpt || post.content?.substring(0, 160),
 			url: `https://www.gulubcc.org/blogs/${post.slug}`,
 			siteName: 'Gulu Bible Community Church',
-			images: [
-				{
-					url: ogImage,
-					width: 1200,
-					height: 630,
-					alt: post.title,
-				},
-			],
+			...(ogImage && {
+				images: [{ url: ogImage, width: 1200, height: 630, alt: post.title }],
+			}),
 			locale: 'en_US',
 			type: 'article',
 			publishedTime: post.publishedAt || post.createdAt,
@@ -82,7 +85,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 			card: 'summary_large_image',
 			title: post.title,
 			description: post.excerpt || post.content?.substring(0, 160),
-			images: [ogImage],
+			...(ogImage && { images: [ogImage] }),
 		},
 	};
 }
