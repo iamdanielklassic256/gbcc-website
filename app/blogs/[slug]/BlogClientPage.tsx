@@ -9,7 +9,7 @@ import {
 	Calendar,
 	Clock,
 	ArrowLeft,
-	User,
+	User, 
 	Share2,
 	Facebook,
 	Twitter,

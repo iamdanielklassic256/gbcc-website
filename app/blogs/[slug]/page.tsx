@@ -92,6 +92,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 	const decodedSlug = decodeURIComponent(slug);
 	const allBlogs = await getBlogs();
 	
+	
 	// Better matching logic (case-insensitive)
 	const post = allBlogs.find((b) => b.slug.toLowerCase() === decodedSlug.toLowerCase());
 	const relatedPosts = allBlogs.filter((b) => b.slug.toLowerCase() !== decodedSlug.toLowerCase()).slice(0, 3);
