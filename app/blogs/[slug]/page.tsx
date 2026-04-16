@@ -45,10 +45,15 @@ function toOgImageUrl(coverImage: string | null | undefined): string | null {
     coverImage.includes('googleusercontent.com');
 
   if (isGoogleHosted) {
-    return `https://www.gulubcc.org/api/og-image?url=${encodeURIComponent(coverImage)}`;
+    // Extract the file ID and use the thumbnail endpoint instead
+    const idMatch = coverImage.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    if (idMatch) {
+      const fileId = idMatch[1];
+      const driveUrl = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1200`;
+      return `https://www.gulubcc.org/api/og-image?url=${encodeURIComponent(driveUrl)}`;
+    }
   }
 
-  // ✅ Fix: convert relative paths to absolute URLs
   if (coverImage.startsWith('/')) {
     return `https://www.gulubcc.org${coverImage}`;
   }
