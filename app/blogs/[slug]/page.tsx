@@ -38,14 +38,22 @@ async function getBlogs(): Promise<BlogPost[]> {
 }
 
 function toOgImageUrl(coverImage: string | null | undefined): string | null {
-	if (!coverImage) return null;
-	const isGoogleHosted =
-		coverImage.includes('drive.google.com') ||
-		coverImage.includes('googleusercontent.com');
-	if (isGoogleHosted) {
-		return `https://www.gulubcc.org/api/og-image?url=${encodeURIComponent(coverImage)}`;
-	}
-	return coverImage;
+  if (!coverImage) return null;
+
+  const isGoogleHosted =
+    coverImage.includes('drive.google.com') ||
+    coverImage.includes('googleusercontent.com');
+
+  if (isGoogleHosted) {
+    return `https://www.gulubcc.org/api/og-image?url=${encodeURIComponent(coverImage)}`;
+  }
+
+  // ✅ Fix: convert relative paths to absolute URLs
+  if (coverImage.startsWith('/')) {
+    return `https://www.gulubcc.org${coverImage}`;
+  }
+
+  return coverImage;
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -99,6 +107,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 	// Better matching logic (case-insensitive)
 	const post = allBlogs.find((b) => b.slug.toLowerCase() === decodedSlug.toLowerCase());
 	const relatedPosts = allBlogs.filter((b) => b.slug.toLowerCase() !== decodedSlug.toLowerCase()).slice(0, 3);
+
+	console.log('fetched blog, ', post)
+
+	
 
 	if (!post) {
 		return (
