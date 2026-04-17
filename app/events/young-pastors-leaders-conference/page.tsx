@@ -193,12 +193,37 @@ export default function YoungPastorsConferencePage() {
 		setIsSubmitting(true);
 		setSubmitError(null);
 
+		// ── Phone normalisation & validation ──────────────────────────────────
+		// Accepts: 07xxxxxxxx  or  +2567xxxxxxxx  (with optional spaces/dashes)
+		const normalizePhone = (raw: string): string | null => {
+			const digits = raw.replace(/[\s\-().]/g, "");
+			if (/^07\d{8}$/.test(digits)) return `+256${digits.slice(1)}`; // 07… → +2567…
+			if (/^\+2567\d{8}$/.test(digits)) return digits;               // already +256 format
+			if (/^2567\d{8}$/.test(digits)) return `+${digits}`;           // 2567… → +2567…
+			return null;
+		};
+
+		const normalizedPhone = normalizePhone(form.phone);
+		const normalizedEmergencyPhone = normalizePhone(form.emergencyPhone);
+
+		if (!normalizedPhone) {
+			setSubmitError("Phone number must start with 07 or +256 followed by 9 digits (e.g. 0700123456 or +256700123456).");
+			setIsSubmitting(false);
+			return;
+		}
+		if (!normalizedEmergencyPhone) {
+			setSubmitError("Emergency phone number must start with 07 or +256 followed by 9 digits (e.g. 0700123456 or +256700123456).");
+			setIsSubmitting(false);
+			return;
+		}
+		// ─────────────────────────────────────────────────────────────────────
+
 		const payload = {
 			// Personal
 			fullName: form.fullName,
 			gender: form.gender.toLowerCase(), // API expects lowercase enum: "male" | "female"
 			dateOfBirth: form.dateOfBirth,
-			phone: form.phone,
+			phone: normalizedPhone,
 			email: form.email,
 			physicalAddress: form.physicalAddress,
 			city: form.city,
@@ -220,7 +245,7 @@ export default function YoungPastorsConferencePage() {
 			// Emergency — field names must match API exactly
 			emergencyName: form.emergencyName,
 			emergencyRelationship: form.emergencyRelationship,
-			emergencyPhone: form.emergencyPhone,
+			emergencyPhone: normalizedEmergencyPhone,
 			// Additional
 			hopingToGain: form.hopingToGain,
 			specialNeeds: form.specialNeeds,
@@ -423,7 +448,7 @@ export default function YoungPastorsConferencePage() {
 							</Field>
 
 							<Field label="Phone Number *" index={4}>
-								<input required type="tel" className={inputCls} placeholder="+256 700 000 000" value={form.phone} onChange={set("phone")} />
+						<input required type="tel" className={inputCls} placeholder="07XXXXXXXX or +256XXXXXXXXX" value={form.phone} onChange={set("phone")} />
 							</Field>
 
 							<Field label="Email Address" index={5}>
@@ -550,7 +575,7 @@ export default function YoungPastorsConferencePage() {
 							</Field>
 
 							<Field label="Phone Number *" index={28}>
-								<input required type="tel" className={inputCls} placeholder="+256 700 000 000" value={form.emergencyPhone} onChange={set("emergencyPhone")} />
+						<input required type="tel" className={inputCls} placeholder="07XXXXXXXX or +256XXXXXXXXX" value={form.emergencyPhone} onChange={set("emergencyPhone")} />
 							</Field>
 						</div>
 					</div>
