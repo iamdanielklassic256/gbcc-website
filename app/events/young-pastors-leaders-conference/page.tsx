@@ -236,6 +236,8 @@ export default function YoungPastorsConferencePage() {
 				body: JSON.stringify(payload),
 			});
 
+			console.log("Form submission response:", res);
+
 			if (!res.ok) {
 				const err = await res.json().catch(() => ({}));
 				throw new Error(err?.message || `Server error (${res.status}). Please try again.`);
