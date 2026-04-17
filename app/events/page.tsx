@@ -23,62 +23,14 @@ import {
 	CheckCircle2,
 	Megaphone,
 	Bell,
+	ArrowRight,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { aruCourses, EventItem, weeklyPrograms } from "@/data/data";
 import Announcement from "@/components/events/announcement";
 
 // ─── Announcements Data ───────────────────────────────────────────────────────
-const announcements = [
-	{
-		icon: Radio,
-		day: "Every Sunday · 8:00 AM",
-		title: "Live Radio Broadcast",
-		description:
-			"Catch our Sunday service live on Radio Wa 89.8 FM. Share the link with friends and family who can't make it in person.",
-		color: "bg-amber-500/10 text-amber-500",
-	},
-	{
-		icon: GraduationCap,
-		day: "Admissions Open · February Intake",
-		title: "Africa Renewal University — Gulu Centre",
-		description:
-			"Applications are open for Certificate and Diploma programs in Theology and Ministry. Pick up your application form at GBCC or call the Centre Coordinator on 0783 583 954.",
-		color: "bg-blue-500/10 text-blue-400",
-	},
-	{
-		icon: BookOpen,
-		day: "Every Wednesday · 6:00 PM",
-		title: "Midweek Bible Study",
-		description:
-			"A consistent weekly gathering for deep Scripture study, prayer, and fellowship. Open to all ages and backgrounds.",
-		color: "bg-emerald-500/10 text-emerald-500",
-	},
-	{
-		icon: Heart,
-		day: "Ongoing",
-		title: "Community Outreach Fund",
-		description:
-			"We are accepting donations and volunteer sign-ups for our ongoing community support programs. Speak to any elder after service or visit the front desk.",
-		color: "bg-rose-500/10 text-rose-400",
-	},
-	{
-		icon: Flame,
-		day: "Every Friday · 7:00 PM",
-		title: "Youth & Young Adults Fellowship",
-		description:
-			"A vibrant space for the next generation to connect, grow, and encounter God. Worship, the Word, and genuine community every week.",
-		color: "bg-orange-500/10 text-orange-400",
-	},
-	{
-		icon: Shield,
-		day: "Every Saturday · 7:00 AM",
-		title: "Men's Prayer Breakfast",
-		description:
-			"Men come together early Saturday morning for prayer, accountability, and breakfast. A powerful way to start the weekend rooted in faith.",
-		color: "bg-indigo-500/10 text-indigo-400",
-	},
-];
+
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function EventsPage() {
@@ -256,8 +208,6 @@ export default function EventsPage() {
 				<div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-r from-slate-50 dark:from-[#020617] to-transparent pointer-events-none z-10" />
 			</section>
 
-			{/* ─── Weekly Programs ─── */}
-
 
 			{/* ─── Tabbed Section: Upcoming Events + Announcements ─── */}
 			<section className="relative z-10 py-20 px-4 sm:px-6">
@@ -281,8 +231,8 @@ export default function EventsPage() {
 								key={key}
 								onClick={() => setActiveTab(key)}
 								className={`group relative flex items-center justify-center gap-2 px-4 sm:px-5 py-3 text-sm font-bold transition-all duration-200 rounded-t-xl sm:-mb-px border sm:border-b-0 border-slate-200 dark:border-slate-800 ${activeTab === key
-										? "bg-white dark:bg-slate-900 text-brand-orange shadow-sm"
-										: "bg-transparent border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200"
+									? "bg-white dark:bg-slate-900 text-brand-orange shadow-sm"
+									: "bg-transparent border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200"
 									}`}
 								style={{ borderBottom: activeTab === key ? "2px solid #f59e42" : undefined }}
 							>
@@ -295,14 +245,11 @@ export default function EventsPage() {
 									}
 								/>
 								{label}
-								{key === "announcements" && (
-									<span className="ml-1 inline-flex items-center justify-center w-5 h-5 rounded-full bg-brand-orange/15 text-brand-orange text-[10px] font-black">
-										{announcements.length}
-									</span>
-								)}
+
 							</button>
 						))}
 					</div>
+
 
 					{/* Tab Panels */}
 					<AnimatePresence mode="wait">
@@ -400,10 +347,7 @@ export default function EventsPage() {
 															variants={fadeUp}
 															className="group relative"
 														>
-															<Link
-																href={`/events/${event.id}`}
-																className="block w-full"
-															>
+															
 																<div className="relative bg-white dark:bg-slate-900 rounded-[24px] border border-slate-200/80 dark:border-slate-800 hover:border-brand-orange/25 shadow-sm hover:shadow-xl hover:shadow-slate-200/60 dark:hover:shadow-brand-orange/5 transition-all duration-500 overflow-hidden cursor-pointer">
 																	<div className="flex flex-col md:flex-row">
 																		{/* ── Date Column ── */}
@@ -479,10 +423,28 @@ export default function EventsPage() {
 																					{event.description}
 																				</p>
 																			)}
+
+																			{/* Register button — only for Young Pastors & Leaders Conference */}
+																			{event.title
+																				.toLowerCase()
+																				.includes("young pastors") && (
+																					<div
+																						className="mt-1 mb-1"
+																						onClick={(e) => e.preventDefault()}
+																					>
+																						<Link
+																							href="/events/young-pastors-leaders-conference"
+																							className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-orange hover:bg-brand-orange/90 text-white font-extrabold rounded-xl transition-all shadow-md shadow-brand-orange/20 hover:shadow-brand-orange/35 hover:scale-[1.02] active:scale-[0.98] text-sm"
+																						>
+																							Register Now
+																							<ArrowRight size={14} />
+																						</Link>
+																					</div>
+																				)}
 																		</div>
 
 																		{/* ── Image Column ── */}
-																		<div className="relative w-full md:w-[280px] lg:w-[340px] xl:w-[380px] h-[220px] sm:h-[240px] md:h-auto flex-shrink-0 order-first md:order-last rounded-lg">
+																		<div className="relative w-full md:w-[280px] lg:w-[340px] xl:w-[380px] h-[220px] sm:h-[240px] md:h-auto shrink-0 order-first md:order-last rounded-lg">
 																			{event.image ? (
 																				<>
 																					<Image
@@ -491,10 +453,10 @@ export default function EventsPage() {
 																						fill
 																						className="object-contain p-3 rounded-lg"
 																					/>
-																					<div className="hidden md:block absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-white dark:from-slate-900 to-transparent z-10" />
+																					<div className="hidden md:block absolute inset-y-0 left-0 w-8 bg-linear-to-r from-white dark:from-slate-900 to-transparent z-10" />
 																				</>
 																			) : (
-																				<div className="w-full h-full min-h-[220px] flex flex-col items-center justify-center bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 text-slate-300 dark:text-slate-700">
+																				<div className="w-full h-full min-h-55 flex flex-col items-center justify-center bg-linear-to-br from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 text-slate-300 dark:text-slate-700">
 																					<Calendar className="h-12 w-12 mb-2 opacity-40" />
 																					<span className="text-xs font-medium">
 																						No Image
@@ -504,7 +466,7 @@ export default function EventsPage() {
 																		</div>
 																	</div>
 																</div>
-															</Link>
+															
 														</motion.article>
 													);
 												})}
