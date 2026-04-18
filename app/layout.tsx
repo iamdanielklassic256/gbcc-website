@@ -51,7 +51,7 @@ const jsonLd = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.gulubcc.org'),
   title: {
-    default: "Gulu Bible Community Church - GBCC | Knowing Christ and Making Him Known",
+    default: "Gulu Bible Community Church - GBCC | With God all things are possible",
     template: "%s | Gulu Bible Community Church",
     
   },

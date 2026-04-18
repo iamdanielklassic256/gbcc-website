@@ -425,6 +425,55 @@ export default function YoungPastorsConferencePage() {
 					</div>
 				</motion.div>
 			</section>
+
+			{/* ─── Payment Details ─── */}
+			<section className="max-w-3xl mx-auto px-4 sm:px-6 pb-4">
+				<motion.div
+					initial={{ opacity: 0, y: 24 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+					className="relative overflow-hidden rounded-3xl border border-brand-orange/30 bg-linear-to-br from-brand-orange/8 via-amber-50/60 to-brand-orange/5 dark:from-brand-orange/10 dark:via-slate-900 dark:to-slate-900 dark:border-brand-orange/20 p-6 sm:p-8"
+				>
+					{/* decorative glow */}
+					<div className="absolute -top-10 -right-10 w-48 h-48 bg-brand-orange/15 rounded-full blur-3xl pointer-events-none" />
+
+					<div className="relative flex flex-col sm:flex-row sm:items-center gap-6">
+						{/* Icon */}
+						<div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-brand-orange/15 border border-brand-orange/25 shrink-0">
+							<svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7 text-brand-orange" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor">
+								<path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3M3.75 19.5h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Z" />
+							</svg>
+						</div>
+
+						{/* Details */}
+						<div className="flex-1">
+							<div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-orange/15 border border-brand-orange/25 text-brand-orange text-xs font-bold uppercase tracking-widest mb-2">
+								Registration Fee
+							</div>
+							<h3 className="text-xl font-extrabold text-slate-900 dark:text-white mb-1">
+								UGX 20,000 per person
+							</h3>
+							<p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+								Pay via Mobile Money before or on arrival. Send payment to the number below and keep your confirmation message.
+							</p>
+
+							{/* Mobile Money Card */}
+							<div className="inline-flex flex-col sm:flex-row sm:items-center gap-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-5 py-4 shadow-sm">
+								<div>
+									<p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wide mb-0.5">Mobile Money</p>
+									<p className="text-2xl font-extrabold tracking-widest text-slate-900 dark:text-white">
+										0784 653 714
+									</p>
+									<p className="text-sm font-semibold text-slate-600 dark:text-slate-300 mt-0.5">
+										Candiru Rebecca Gloria
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</motion.div>
+			</section>
+
 			{/* ─── Form ─── */}
 			<section className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-16">
 				<form onSubmit={handleSubmit} noValidate className="space-y-10">
@@ -448,7 +497,7 @@ export default function YoungPastorsConferencePage() {
 							</Field>
 
 							<Field label="Phone Number *" index={4}>
-						<input required type="tel" className={inputCls} placeholder="07XXXXXXXX or +256XXXXXXXXX" value={form.phone} onChange={set("phone")} />
+								<input required type="tel" className={inputCls} placeholder="07XXXXXXXX or +256XXXXXXXXX" value={form.phone} onChange={set("phone")} />
 							</Field>
 
 							<Field label="Email Address" index={5}>
@@ -575,7 +624,7 @@ export default function YoungPastorsConferencePage() {
 							</Field>
 
 							<Field label="Phone Number *" index={28}>
-						<input required type="tel" className={inputCls} placeholder="07XXXXXXXX or +256XXXXXXXXX" value={form.emergencyPhone} onChange={set("emergencyPhone")} />
+								<input required type="tel" className={inputCls} placeholder="07XXXXXXXX or +256XXXXXXXXX" value={form.emergencyPhone} onChange={set("emergencyPhone")} />
 							</Field>
 						</div>
 					</div>
