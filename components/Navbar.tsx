@@ -51,6 +51,7 @@ export default function Navbar() {
 				{ name: "Blogs", href: "/blogs" },
 			]
 		},
+		{ name: "Join Home Cell", href: "/home-cell" },
 		{ name: "Contact", href: "/contact" },
 	];
 
