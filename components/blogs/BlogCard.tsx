@@ -243,7 +243,7 @@ export default function BlogCard({ post }: { post: BlogPost }) {
 				</div>
 			)}
 
-			<ShareBar postUrl={postUrl} postTitle={post.title} />
+			
 		</motion.article>
 	);
 }
