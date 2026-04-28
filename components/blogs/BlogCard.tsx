@@ -101,7 +101,7 @@ function parseContent(content: string): ParsedBlock[] {
 
 function TwoColumnBlock({ block }: { block: ParsedBlock }) {
 	const imageCol = (
-		<div className="flex flex-col gap-3 w-full md:w-[42%] flex-shrink-0">
+		<div className="flex flex-col gap-3 w-full md:w-[42%] shrink-0">
 			{block.imageSrc && (
 				<figure className="m-0">
 					<div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
