@@ -76,13 +76,7 @@ export default function ChurchPlantClientPage({
 								<MapPin size={14} className="text-brand-orange" />
 								{plant.location}
 							</span>
-							<span className="flex items-center gap-1.5">
-								<Calendar size={14} className="text-brand-orange" />
-								Established {formattedDate}
-							</span>
-							<span className="inline-flex items-center gap-1.5 bg-green-500/20 text-green-400 border border-green-500/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">
-								Active
-							</span>
+							
 						</div>
 					</motion.div>
 				</div>
