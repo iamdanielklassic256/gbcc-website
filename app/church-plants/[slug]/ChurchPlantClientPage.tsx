@@ -62,6 +62,7 @@ export default function ChurchPlantClientPage({
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5 }}
 					>
+						
 						<Link
 							href="/church-plants"
 							className="inline-flex items-center gap-2 text-white/60 hover:text-white text-sm mb-6 transition-colors"
