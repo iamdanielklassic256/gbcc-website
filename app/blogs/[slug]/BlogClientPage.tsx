@@ -77,6 +77,9 @@ export default function BlogClientPage({ post, relatedPosts }: { post: BlogPost;
 		return `${minutes} min read`;
 	};
 
+
+	console.log('post', post.content)
+
 	const tags = post.tags ? post.tags.split(",").map((t) => t.trim()).filter(Boolean) : [];
 
 	const postUrl = typeof window !== "undefined"

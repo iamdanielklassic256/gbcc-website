@@ -75,10 +75,10 @@ function parseContent(content: string): ParsedBlock[] {
 		const decodeAttr = (val: string) =>
 			val.replace(/&amp;/g, "&").replace(/&quot;/g, '"');
 
-		const imgSrc = decodeAttr(attrs.match(/imagesrc="([^"]*)"/i)?.[1] || "");
-		const imgAlt = decodeAttr(attrs.match(/imagealt="([^"]*)"/i)?.[1] || "");
-		const imgCaption = decodeAttr(attrs.match(/imagecaption="([^"]*)"/i)?.[1] || "");
-		const imgPosition = (attrs.match(/imageposition="([^"]*)"/i)?.[1] || "right") as "left" | "right";
+		const imgSrc = decodeAttr(attrs.match(/data-image-src="([^"]*)"/i)?.[1] || "");
+		const imgAlt = decodeAttr(attrs.match(/data-image-alt="([^"]*)"/i)?.[1] || "");
+		const imgCaption = decodeAttr(attrs.match(/data-image-caption="([^"]*)"/i)?.[1] || "");
+		const imgPosition = (attrs.match(/data-image-position="([^"]*)"/i)?.[1] || "right") as "left" | "right";
 
 		blocks.push({
 			type: "two-column",
