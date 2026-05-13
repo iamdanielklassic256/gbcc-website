@@ -21,10 +21,12 @@ interface BlogPost {
 	status: string;
 	isFeatured: boolean;
 	publishedAt: string;
+	scheduledAt: string | null;
 	viewCount: number;
 	createdAt: string;
 	updatedAt: string;
 }
+
 
 const categoryColors: Record<string, string> = {
 	Devotional: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400",
@@ -50,7 +52,12 @@ export default function BlogsPage() {
 				const res = await fetch(`${apiUrl}/blogs`);
 				if (!res.ok) throw new Error("Failed to fetch blogs");
 				const data = await res.json();
-				const publishedData = data.filter((p: BlogPost) => p.status === "published");
+				const now = new Date();
+				const publishedData = data.filter(
+					(p: BlogPost) =>
+						p.status === "published" &&
+						(!p.scheduledAt || new Date(p.scheduledAt) <= now)
+				);
 				setPosts(publishedData);
 			} catch (err) {
 				console.error(err);
@@ -87,12 +94,10 @@ export default function BlogsPage() {
 		}
 	};
 
-	const estimateReadTime = (content: string) => {
-		const text = content.replace(/<[^>]*>/g, "");
-		const words = text.split(/\s+/).length;
-		const minutes = Math.max(1, Math.ceil(words / 200));
-		return `${minutes} min read`;
-	};
+
+	console.log("Fetched posts:", posts);
+
+
 
 	const fadeUp = {
 		hidden: { opacity: 0, y: 24 },
@@ -260,13 +265,10 @@ export default function BlogsPage() {
 													<span className="text-slate-200 dark:text-slate-700">•</span>
 													<span className="flex items-center gap-1.5">
 														<Calendar size={14} />
-														{formatDate(featuredPost.publishedAt || featuredPost.createdAt)}
+														{formatDate(featuredPost.scheduledAt ?? '')}
 													</span>
 													<span className="text-slate-200 dark:text-slate-700">•</span>
-													<span className="flex items-center gap-1.5">
-														<Clock size={14} />
-														{estimateReadTime(featuredPost.content)}
-													</span>
+
 												</div>
 
 												<span className="self-start flex items-center gap-2.5 bg-brand-orange hover:bg-brand-orange/90 text-white px-7 py-3.5 rounded-2xl font-bold text-sm shadow-lg shadow-brand-orange/25 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 active:scale-[0.98] group/btn">
@@ -396,13 +398,10 @@ export default function BlogsPage() {
 													<div className="flex items-center gap-3 text-xs text-slate-400 dark:text-slate-500 font-medium mb-3">
 														<span className="flex items-center gap-1">
 															<Calendar size={12} />
-															{formatDate(post.createdAt)}
+															{formatDate(post.scheduledAt ?? '')}
 														</span>
 														<span className="text-slate-200 dark:text-slate-700">•</span>
-														<span className="flex items-center gap-1">
-															<Clock size={12} />
-															{estimateReadTime(post.content)}
-														</span>
+
 													</div>
 
 													{/* Title */}
@@ -417,12 +416,12 @@ export default function BlogsPage() {
 
 													{/* Footer */}
 													<div className="pt-5 border-t border-slate-100 dark:border-slate-800 ">
-											
-											<div className="flex flex-row items-center justify-center gap-2 text-white font-bold bg-orange-600 p-1 rounded-lg">
-												Read
-												<ArrowRight size={14} />
-											</div>
-										</div>
+
+														<div className="flex flex-row items-center justify-center gap-2 text-white font-bold bg-orange-600 p-1 rounded-lg">
+															Read
+															<ArrowRight size={14} />
+														</div>
+													</div>
 												</div>
 											</Link>
 										</motion.article>

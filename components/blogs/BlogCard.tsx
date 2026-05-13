@@ -17,7 +17,7 @@ interface BlogPost {
 	author: string;
 	status: string;
 	isFeatured: boolean;
-	publishedAt: string;
+	scheduledAt: string | null;
 	viewCount: number;
 	createdAt: string;
 	updatedAt: string;
@@ -243,7 +243,7 @@ export default function BlogCard({ post }: { post: BlogPost }) {
 				</div>
 			)}
 
-			
+
 		</motion.article>
 	);
 }

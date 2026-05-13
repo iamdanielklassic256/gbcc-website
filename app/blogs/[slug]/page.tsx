@@ -18,6 +18,7 @@ interface BlogPost {
 	status: string;
 	isFeatured: boolean;
 	publishedAt: string;
+	scheduledAt: string | null;
 	viewCount: number;
 	createdAt: string;
 	updatedAt: string;
@@ -30,7 +31,10 @@ async function getBlogs(): Promise<BlogPost[]> {
 		const res = await fetch(`${apiUrl}/blogs`, { cache: 'no-store' });
 		if (!res.ok) return [];
 		const blogs: BlogPost[] = await res.json();
-		return blogs.filter((b) => b.status === "published");
+		const now = new Date();
+		return blogs.filter(
+			(b) => b.status === "published" && (!b.scheduledAt || new Date(b.scheduledAt) <= now)
+		);
 	} catch (error) {
 		console.error("Failed to fetch blogs on server:", error);
 		return [];
@@ -38,27 +42,27 @@ async function getBlogs(): Promise<BlogPost[]> {
 }
 
 function toOgImageUrl(coverImage: string | null | undefined): string | null {
-  if (!coverImage) return null;
+	if (!coverImage) return null;
 
-  const isGoogleHosted =
-    coverImage.includes('drive.google.com') ||
-    coverImage.includes('googleusercontent.com');
+	const isGoogleHosted =
+		coverImage.includes('drive.google.com') ||
+		coverImage.includes('googleusercontent.com');
 
-  if (isGoogleHosted) {
-    // Extract the file ID and use the thumbnail endpoint instead
-    const idMatch = coverImage.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-    if (idMatch) {
-      const fileId = idMatch[1];
-      const driveUrl = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1200`;
-      return `https://www.gulubcc.org/api/og-image?url=${encodeURIComponent(driveUrl)}`;
-    }
-  }
+	if (isGoogleHosted) {
+		// Extract the file ID and use the thumbnail endpoint instead
+		const idMatch = coverImage.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+		if (idMatch) {
+			const fileId = idMatch[1];
+			const driveUrl = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1200`;
+			return `https://www.gulubcc.org/api/og-image?url=${encodeURIComponent(driveUrl)}`;
+		}
+	}
 
-  if (coverImage.startsWith('/')) {
-    return `https://www.gulubcc.org${coverImage}`;
-  }
+	if (coverImage.startsWith('/')) {
+		return `https://www.gulubcc.org${coverImage}`;
+	}
 
-  return coverImage;
+	return coverImage;
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -91,7 +95,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 			}),
 			locale: 'en_US',
 			type: 'article',
-			publishedTime: post.publishedAt || post.createdAt,
+			publishedTime: post.scheduledAt || post.createdAt,
 			authors: [post.author || 'GBCC Writer'],
 		},
 		twitter: {
@@ -107,15 +111,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 	const { slug } = await params;
 	const decodedSlug = decodeURIComponent(slug);
 	const allBlogs = await getBlogs();
-	
-	
+
+
 	// Better matching logic (case-insensitive)
 	const post = allBlogs.find((b) => b.slug.toLowerCase() === decodedSlug.toLowerCase());
 	const relatedPosts = allBlogs.filter((b) => b.slug.toLowerCase() !== decodedSlug.toLowerCase()).slice(0, 3);
 
 	console.log('fetched blog, ', post)
 
-	
+
 
 	if (!post) {
 		return (

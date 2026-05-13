@@ -37,10 +37,12 @@ interface BlogPost {
 	status: string;
 	isFeatured: boolean;
 	publishedAt: string;
+	scheduledAt: string | null;
 	viewCount: number;
 	createdAt: string;
 	updatedAt: string;
 }
+
 
 const categoryColors: Record<string, string> = {
 	Devotional: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400",
@@ -206,7 +208,7 @@ export default function BlogClientPage({ post, relatedPosts }: { post: BlogPost;
 								<span className="text-white/20">•</span>
 								<span className="flex items-center gap-1.5">
 									<Calendar size={14} />
-									{formatDate(post.publishedAt || post.createdAt)}
+									{formatDate(post.scheduledAt || post.createdAt)}
 								</span>
 								<span className="text-white/20">•</span>
 								<span className="flex items-center gap-1.5">
@@ -232,7 +234,7 @@ export default function BlogClientPage({ post, relatedPosts }: { post: BlogPost;
 			<section className="relative z-10 px-4 sm:px-6">
 				<div className="max-w-5xl mx-auto">
 					{/* Blog section  */}
-				
+
 					<BlogCard post={post} />
 
 					{/* ─── CommentSection ─── */}
@@ -378,7 +380,7 @@ export default function BlogClientPage({ post, relatedPosts }: { post: BlogPost;
 										<div className="flex flex-col flex-1 p-5">
 											<span className="text-xs text-slate-400 dark:text-slate-500 font-medium mb-2 flex items-center gap-1">
 												<Calendar size={11} />
-												{formatDate(related.publishedAt || related.createdAt)}
+												{formatDate(related.scheduledAt || related.createdAt)}
 											</span>
 											<h3 className="text-base font-bold text-slate-900 dark:text-white leading-snug group-hover:text-brand-orange transition-colors duration-300 line-clamp-2">
 												{related.title}
