@@ -50,7 +50,7 @@ function parseContent(content: string): ParsedBlock[] {
 		let closeIndex = -1;
 
 		while (i < remaining.length) {
-			if (remaining.slice(i).match(/^<div[\s>]/)) {
+			if (remaining.slice(i, i + 4) === "<div") {
 				depth++;
 				i += 4;
 			} else if (remaining.slice(i, i + 6) === "</div>") {
@@ -104,12 +104,13 @@ function TwoColumnBlock({ block }: { block: ParsedBlock }) {
 		<div className="flex flex-col gap-3 w-full md:w-[42%] shrink-0">
 			{block.imageSrc && (
 				<figure className="m-0">
-					<div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
+					<div className="rounded-2xl overflow-hidden shadow-lg w-full">
 						<Image
 							src={block.imageSrc}
 							alt={block.imageAlt || ""}
-							fill
-							className="object-cover"
+							width={800}
+							height={600}
+							className="w-full h-auto"
 							unoptimized={block.imageSrc.includes("drive.google.com")}
 						/>
 					</div>
