@@ -424,19 +424,19 @@ export default function EventsPage() {
 																				</p>
 																			)}
 
-																			{/* Register button — only for Young Pastors & Leaders Conference */}
+																			{/* Register button — only for Ignite 26 Youth Summit */}
 																			{event.title
 																				.toLowerCase()
-																				.includes("young pastors") && (
+																				.includes("ignite 26 youth") && (
 																					<div
 																						className="mt-1 mb-1"
 																						onClick={(e) => e.preventDefault()}
 																					>
 																						<Link
-																							href="/events/young-pastors-leaders-conference"
+																							href="/events/ignite-26-youth-summit"
 																							className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-orange hover:bg-brand-orange/90 text-white font-extrabold rounded-xl transition-all shadow-md shadow-brand-orange/20 hover:shadow-brand-orange/35 hover:scale-[1.02] active:scale-[0.98] text-sm"
 																						>
-																							Register Now
+																							Read More
 																							<ArrowRight size={14} />
 																						</Link>
 																					</div>
