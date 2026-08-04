@@ -15,7 +15,6 @@ import {
 	Users,
 	Sparkles,
 	Mail,
-	QrCode,
 	ArrowRight,
 } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -138,12 +137,12 @@ export default function IgniteYouthSummitPage() {
 						<div className="flex flex-wrap items-center justify-center gap-4 text-sm text-white/70">
 							<span className="flex items-center gap-1.5">
 								<Calendar size={14} className="text-brand-orange" />
-								24 – 28 August 2026
+								31 August – 4 September 2026
 							</span>
 							<span className="text-white/20">|</span>
 							<span className="flex items-center gap-1.5">
 								<MapPin size={14} className="text-brand-orange" />
-								Venue to be communicated
+								Rooted Christian Ministry
 							</span>
 						</div>
 					</motion.div>
@@ -192,11 +191,11 @@ export default function IgniteYouthSummitPage() {
 						<div className="flex flex-wrap gap-4 text-sm text-slate-600 dark:text-slate-400">
 							<span className="flex items-center gap-1.5">
 								<Calendar size={14} className="text-brand-orange shrink-0" />
-								24 – 28 August 2026
+								31 August – 4 September 2026
 							</span>
 							<span className="flex items-center gap-1.5">
 								<MapPin size={14} className="text-brand-orange shrink-0" />
-								Venue TBC
+								Rooted Christian Ministry
 							</span>
 						</div>
 					</div>
@@ -278,7 +277,7 @@ export default function IgniteYouthSummitPage() {
 							<Calendar size={18} className="text-brand-orange shrink-0 mt-0.5" />
 							<div>
 								<p className="text-xs font-bold text-slate-400 uppercase tracking-wide mb-0.5">Dates</p>
-								<p className="text-sm font-semibold text-slate-800 dark:text-white">24 – 28 August</p>
+								<p className="text-sm font-semibold text-slate-800 dark:text-white">31 August – 4 September</p>
 							</div>
 						</div>
 						<div className="flex items-start gap-3 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800">
@@ -300,7 +299,7 @@ export default function IgniteYouthSummitPage() {
 						<MapPin size={18} className="text-brand-orange shrink-0 mt-0.5" />
 						<div>
 							<p className="text-xs font-bold text-slate-400 uppercase tracking-wide mb-0.5">Venue</p>
-							<p className="text-sm font-semibold text-slate-800 dark:text-white">To be communicated</p>
+							<p className="text-sm font-semibold text-slate-800 dark:text-white">Rooted Christian Ministry</p>
 						</div>
 					</div>
 				</div>
@@ -325,20 +324,6 @@ export default function IgniteYouthSummitPage() {
 						</h3>
 
 						<div className="flex flex-col sm:flex-row gap-4">
-							{/* QR */}
-							<div className="flex items-center gap-4 flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-5 py-4 shadow-sm">
-								<span className="flex items-center justify-center w-12 h-12 rounded-xl bg-brand-orange/10 shrink-0">
-									<QrCode size={22} className="text-brand-orange" />
-								</span>
-								<div>
-									<p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wide mb-0.5">
-										Scan to Register
-									</p>
-									<p className="text-sm font-semibold text-slate-700 dark:text-slate-200">
-										Scan the QR code on the IGNITE 26 event poster
-									</p>
-								</div>
-							</div>
 							<a href="mailto:media@gulubcc.org"
 								className="flex items-center gap-4 flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-5 py-4 shadow-sm hover:border-brand-orange/40 transition-colors group"
 							>

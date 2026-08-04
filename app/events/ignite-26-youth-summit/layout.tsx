@@ -44,7 +44,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 	const title = "IGNITE 26 Youth Summit — Season 2 | GBCC";
 	const description =
-		"Five days of worship, biblical teaching, fellowship, and revival encounters. Knowing Your God as a Young Person. 24–28 August, Gulu Bible Community Church.";
+		"Five days of worship, biblical teaching, fellowship, and revival encounters. Knowing Your God as a Young Person. 31 August - 4 September, Rooted Christian Ministry.";
 
 	return {
 		title,
