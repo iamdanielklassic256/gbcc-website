@@ -6,6 +6,23 @@ import { Mail, Phone, MapPin, Send, MessageCircle, ArrowRight, Facebook, Twitter
 import { motion } from "framer-motion";
 import { useState } from "react";
 
+// shared input styles (colors unchanged: slate base, brand-orange / brand-blue focus)
+const inputBase =
+	"w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 outline-none transition-all placeholder:text-slate-400 text-sm";
+const focusOrange = "focus:ring-2 focus:ring-brand-orange/50 focus:border-brand-orange";
+const focusBlue = "focus:ring-2 focus:ring-brand-blue/50 focus:border-brand-blue";
+
+// shared card styles for the info cards
+const infoCard =
+	"group relative overflow-hidden p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl hover:-translate-y-1 transition-all duration-300";
+
+const Label = ({ htmlFor, children, required }: { htmlFor: string; children: React.ReactNode; required?: boolean }) => (
+	<label htmlFor={htmlFor} className="block text-sm font-medium text-foreground/70 mb-1.5">
+		{children}
+		{required && <span className="text-brand-orange ml-0.5" aria-hidden>*</span>}
+	</label>
+);
+
 export default function ContactPage() {
 	const [formData, setFormData] = useState({
 		firstName: "",
@@ -83,12 +100,11 @@ export default function ContactPage() {
 			<Navbar />
 
 			{/* Hero Section */}
-			<section className="relative pt-40 pb-36 px-6 overflow-hidden bg-slate-950">
+			<section className="relative pt-36 pb-28 px-6 overflow-hidden bg-slate-950">
 				{/* Dark background base for white navbar to be visible */}
 				<div className="absolute inset-0 overflow-hidden pointer-events-none">
 					<div className="absolute top-[-10%] left-[20%] w-[60%] h-[60%] bg-brand-orange/20 rounded-full blur-[150px] opacity-70" />
 					<div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-brand-blue/30 rounded-full blur-[120px] opacity-60" />
-					<div className="absolute inset-0 opacity-[0.03] mix-blend-overlay" style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg width=\\'60\\' height=\\'60\\' viewBox=\\'0 0 60 60\\' xmlns=\\'http://www.w3.org/2000/svg\\'%3E%3Cg fill=\\'none\\' fill-rule=\\'evenodd\\'%3E%3Cg fill=\\'%23ffffff\\' fill-opacity=\\'1\\'%3E%3Cpath d=\\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')" }}></div>
 				</div>
 
 				<div className="relative z-10 w-full max-w-7xl mx-auto text-center">
@@ -96,78 +112,87 @@ export default function ContactPage() {
 						initial="hidden"
 						animate="visible"
 						variants={staggerContainer}
-						className="max-w-3xl mx-auto mb-10"
+						className="max-w-2xl mx-auto"
 					>
-						<motion.div variants={fadeIn} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 text-white font-bold text-sm mb-8 border border-white/10 backdrop-blur-md shadow-lg shadow-black/20">
-							<MessageCircle size={16} className="text-brand-orange" />
-							<span>We'd love to hear from you</span>
+						<motion.div variants={fadeIn} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 text-white font-medium text-xs sm:text-sm mb-6 border border-white/10 backdrop-blur-md shadow-lg shadow-black/20">
+							<MessageCircle size={14} className="text-brand-orange" />
+							<span>We&apos;d love to hear from you</span>
 						</motion.div>
-						<motion.h1 variants={fadeIn} className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-4 sm:mb-6 text-white min-h-[1.2em]">
+						<motion.h1 variants={fadeIn} className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4 text-white">
 							Get in <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-brand-blue">Touch</span>
 						</motion.h1>
-						<motion.p variants={fadeIn} className="text-base sm:text-lg lg:text-xl text-white/70 leading-relaxed font-medium px-4 sm:px-0">
+						<motion.p variants={fadeIn} className="text-sm sm:text-base md:text-lg text-white/70 leading-relaxed">
 							Have questions? Want to learn more about our ministries? Our team is here to help and pray with you. Reach out through any of the channels below.
 						</motion.p>
 					</motion.div>
 				</div>
                 
 				{/* Bottom decorative mask to blend into the next section smoothly */}
-				<div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-50 dark:from-[#020617] to-transparent pointer-events-none"></div>
+				<div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-50 dark:from-[#020617] to-transparent pointer-events-none"></div>
 			</section>
 
 			<section className="pb-24 px-6 relative z-10 w-full max-w-7xl mx-auto">
-				<div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start -mt-8 md:-mt-16 lg:-mt-24">
+				<div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start -mt-12 md:-mt-16 lg:-mt-20">
 					{/* Contact Info */}
 					<motion.div 
 						initial="hidden"
 						animate="visible"
 						variants={staggerContainer}
-						className="lg:col-span-5 space-y-6"
+						className="lg:col-span-5 space-y-5"
 					>
-						<motion.div variants={fadeIn} className="group relative overflow-hidden p-8 rounded-[32px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
-							<div className="absolute top-0 right-0 w-32 h-32 bg-brand-orange/5 rounded-bl-[100px] -z-10 transition-transform group-hover:scale-110" />
-							<div className="w-16 h-16 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-								<MapPin size={32} />
+						{/* Visit */}
+						<motion.div variants={fadeIn} className={infoCard}>
+							<div className="absolute top-0 right-0 w-28 h-28 bg-brand-orange/5 rounded-bl-[80px] -z-10 transition-transform group-hover:scale-110" />
+							<div className="w-11 h-11 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+								<MapPin size={22} />
 							</div>
-							<h3 className="text-xl sm:text-2xl font-bold mb-3">Visit Us</h3>
-							<p className="text-foreground/70 text-base sm:text-lg leading-relaxed mb-6">Plot 1450 Airfield Road<br/>Gulu City, Uganda</p>
-							<a href="#" className="inline-flex items-center gap-2 text-brand-orange font-bold text-sm sm:text-base hover:gap-3 transition-all relative">
-								Get Directions <ArrowRight size={18} />
-								<span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-orange transition-all group-hover:w-full"></span>
+							<h3 className="text-lg font-semibold mb-2">Visit Us</h3>
+							<p className="text-foreground/70 text-sm sm:text-base leading-relaxed mb-4">Plot 1450 Airfield Road<br/>Gulu City, Uganda</p>
+							<a
+								href="https://maps.google.com/?q=GULU+BIBLE+COMMUNITY+CHURCH,+Airfield+Road,+Gulu"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="inline-flex items-center gap-2 text-brand-orange font-semibold text-sm hover:gap-3 transition-all"
+							>
+								Get Directions <ArrowRight size={16} />
 							</a>
 						</motion.div>
 
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
-							<motion.div variants={fadeIn} className="group relative overflow-hidden p-6 sm:p-8 rounded-[32px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
-								<div className="absolute top-0 right-0 w-24 h-24 bg-brand-blue/5 rounded-bl-[80px] -z-10 transition-transform group-hover:scale-110" />
-								<div className="flex items-start justify-between">
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-5">
+							{/* Call */}
+							<motion.div variants={fadeIn} className={infoCard}>
+								<div className="absolute top-0 right-0 w-24 h-24 bg-brand-blue/5 rounded-bl-[70px] -z-10 transition-transform group-hover:scale-110" />
+								<div className="flex items-start justify-between gap-3">
 									<div>
-										<div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-											<Phone size={20} className="sm:w-6 sm:h-6" />
+										<div className="w-11 h-11 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+											<Phone size={20} />
 										</div>
-										<h3 className="text-lg sm:text-xl font-bold mb-2">Call Us</h3>
-										<p className="text-foreground/70 text-base sm:text-lg">+256 772 44 9291</p>
+										<h3 className="text-lg font-semibold mb-2">Call Us</h3>
+										<a href="tel:+256772449291" className="text-foreground/70 text-sm sm:text-base hover:text-brand-orange transition-colors">
+											+256 772 44 9291
+										</a>
 									</div>
-									<div className="bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 p-2 sm:p-3 rounded-2xl flex flex-col items-center justify-center hover:scale-110 transition-transform cursor-pointer shadow-sm">
-										<MessageCircle size={20} className="sm:w-6 sm:h-6" />
-										<span className="text-[9px] sm:text-[10px] font-bold mt-1 uppercase tracking-wider">WhatsApp</span>
+									<div className="bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 px-3 py-2 rounded-xl flex flex-col items-center justify-center hover:scale-105 transition-transform cursor-pointer shadow-sm">
+										<MessageCircle size={18} />
+										<span className="text-[10px] font-semibold mt-1">WhatsApp</span>
 									</div>
 								</div>
 							</motion.div>
 
-							<motion.div variants={fadeIn} className="group relative overflow-hidden p-6 sm:p-8 rounded-[32px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
-								<div className="absolute top-0 right-0 w-24 h-24 bg-slate-100 dark:bg-slate-800 rounded-bl-[80px] -z-10 transition-transform group-hover:scale-110" />
-								<div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-sm">
-									<Mail size={20} className="sm:w-6 sm:h-6" />
+							{/* Email */}
+							<motion.div variants={fadeIn} className={infoCard}>
+								<div className="absolute top-0 right-0 w-24 h-24 bg-slate-100 dark:bg-slate-800 rounded-bl-[70px] -z-10 transition-transform group-hover:scale-110" />
+								<div className="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+									<Mail size={20} />
 								</div>
-								<h3 className="text-lg sm:text-xl font-bold mb-2">Email Us</h3>
+								<h3 className="text-lg font-semibold mb-2">Email Us</h3>
 								<div className="space-y-2">
-									<a href="mailto:administrator@gulubcc.org" className="flex items-center gap-2 text-foreground/70 text-sm sm:text-base hover:text-brand-orange transition-colors">
-										<div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-brand-orange transition-colors" />
+									<a href="mailto:administrator@gulubcc.org" className="flex items-center gap-2 text-foreground/70 text-sm sm:text-base hover:text-brand-orange transition-colors break-all">
+										<div className="w-1.5 h-1.5 shrink-0 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-brand-orange transition-colors" />
 										administrator@gulubcc.org
 									</a>
-									<a href="mailto:media@gulubcc.org" className="flex items-center gap-2 text-foreground/70 text-sm sm:text-base hover:text-brand-orange transition-colors">
-										<div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-brand-orange transition-colors" />
+									<a href="mailto:media@gulubcc.org" className="flex items-center gap-2 text-foreground/70 text-sm sm:text-base hover:text-brand-orange transition-colors break-all">
+										<div className="w-1.5 h-1.5 shrink-0 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-brand-orange transition-colors" />
 										media@gulubcc.org
 									</a>
 								</div>
@@ -177,87 +202,110 @@ export default function ContactPage() {
 
 					{/* Contact Form */}
 					<motion.div
-						initial={{ opacity: 0, x: 50 }}
+						initial={{ opacity: 0, x: 40 }}
 						animate={{ opacity: 1, x: 0 }}
-						transition={{ duration: 0.8, delay: 0.3, type: "spring", bounce: 0.4 }}
+						transition={{ duration: 0.8, delay: 0.3, type: "spring", bounce: 0.3 }}
 						className="lg:col-span-7 relative"
 					>
 						{/* Decorative background for the form */}
-						<div className="absolute inset-0 bg-gradient-to-br from-brand-orange/10 to-brand-blue/10 rounded-[48px] transform rotate-2 scale-[1.02] -z-10" />
+						<div className="absolute inset-0 bg-gradient-to-br from-brand-orange/10 to-brand-blue/10 rounded-[2rem] transform rotate-1 scale-[1.02] -z-10" />
 						
-						<div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl p-8 md:p-12 rounded-[40px] shadow-2xl shadow-slate-200/50 dark:shadow-none border border-white dark:border-slate-800 relative overflow-hidden">
+						<div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl p-6 sm:p-8 md:p-10 rounded-[2rem] shadow-xl shadow-slate-200/50 dark:shadow-none border border-white dark:border-slate-800 relative overflow-hidden">
 							{/* Form decorative blob */}
 							<div className="absolute top-[-50px] right-[-50px] w-[150px] h-[150px] bg-brand-orange/5 rounded-full blur-3xl pointer-events-none" />
 
-							<div className="mb-8 sm:mb-10 relative z-10">
-								<h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-2 sm:mb-3">Send a Message</h2>
-								<p className="text-foreground/60 text-base sm:text-lg">We typically reply within 24 hours.</p>
+							<div className="mb-7 relative z-10">
+								<h2 className="text-lg sm:text-xl font-bold mb-1.5">Send a Message</h2>
+								<p className="text-foreground/60 text-sm sm:text-base">We typically reply within 24 hours.</p>
 							</div>
 
-							<form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6 relative z-10">
+							<form onSubmit={handleSubmit} className="space-y-5 relative z-10">
 								{status.message && (
-									<motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className={`p-4 rounded-xl sm:rounded-2xl text-sm font-bold shadow-sm ${status.type === 'success' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'}`}>
+									<motion.div
+										role="status"
+										aria-live="polite"
+										initial={{ opacity: 0, y: -10 }}
+										animate={{ opacity: 1, y: 0 }}
+										className={`p-3.5 rounded-xl text-sm font-medium shadow-sm ${status.type === 'success' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'}`}
+									>
 										{status.message}
 									</motion.div>
 								)}
-								<div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-									<div className="space-y-1.5 sm:space-y-2">
-										<label className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-foreground/50 ml-1">First Name</label>
-										<input 
-											type="text" 
+
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+									<div>
+										<Label htmlFor="firstName" required>First name</Label>
+										<input
+											id="firstName"
+											type="text"
 											name="firstName"
+											autoComplete="given-name"
 											value={formData.firstName}
 											onChange={handleChange}
-											className="w-full px-4 py-3.5 sm:px-5 sm:py-4 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 outline-none focus:ring-2 focus:ring-brand-orange/50 focus:border-brand-orange transition-all placeholder:text-slate-400 text-sm sm:text-base" 
-											placeholder="John" 
+											className={`${inputBase} ${focusOrange}`}
+											placeholder="John"
 										/>
 									</div>
-									<div className="space-y-1.5 sm:space-y-2">
-										<label className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-foreground/50 ml-1">Last Name</label>
-										<input 
-											type="text" 
+									<div>
+										<Label htmlFor="lastName">Last name</Label>
+										<input
+											id="lastName"
+											type="text"
 											name="lastName"
+											autoComplete="family-name"
 											value={formData.lastName}
 											onChange={handleChange}
-											className="w-full px-4 py-3.5 sm:px-5 sm:py-4 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 outline-none focus:ring-2 focus:ring-brand-orange/50 focus:border-brand-orange transition-all placeholder:text-slate-400 text-sm sm:text-base" 
-											placeholder="Doe" 
+											className={`${inputBase} ${focusOrange}`}
+											placeholder="Doe"
 										/>
 									</div>
 								</div>
-								<div className="space-y-1.5 sm:space-y-2">
-									<label className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-foreground/50 ml-1">Email Address</label>
-									<input 
-										type="email" 
+
+								<div>
+									<Label htmlFor="email" required>Email address</Label>
+									<input
+										id="email"
+										type="email"
 										name="email"
+										autoComplete="email"
 										value={formData.email}
 										onChange={handleChange}
-										className="w-full px-4 py-3.5 sm:px-5 sm:py-4 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 outline-none focus:ring-2 focus:ring-brand-blue/50 focus:border-brand-blue transition-all placeholder:text-slate-400 text-sm sm:text-base" 
-										placeholder="john@example.com" 
+										className={`${inputBase} ${focusBlue}`}
+										placeholder="john@example.com"
 									/>
 								</div>
-								<div className="space-y-1.5 sm:space-y-2">
-									<label className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-foreground/50 ml-1">Subject</label>
-									<input 
-										type="text" 
+
+								<div>
+									<Label htmlFor="subject" required>Subject</Label>
+									<input
+										id="subject"
+										type="text"
 										name="subject"
 										value={formData.subject}
 										onChange={handleChange}
-										className="w-full px-4 py-3.5 sm:px-5 sm:py-4 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 outline-none focus:ring-2 focus:ring-brand-orange/50 focus:border-brand-orange transition-all placeholder:text-slate-400 text-sm sm:text-base"
-										placeholder="e.g. Prayer Request, General Inquiry" 
+										className={`${inputBase} ${focusOrange}`}
+										placeholder="e.g. Prayer Request, General Inquiry"
 									/>
 								</div>
-								<div className="space-y-1.5 sm:space-y-2">
-									<label className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-foreground/50 ml-1">Message</label>
-									<textarea 
-										rows={4} 
+
+								<div>
+									<Label htmlFor="message" required>Message</Label>
+									<textarea
+										id="message"
+										rows={5}
 										name="message"
 										value={formData.message}
 										onChange={handleChange}
-										className="w-full px-4 py-3.5 sm:px-5 sm:py-4 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 outline-none focus:ring-2 focus:ring-brand-orange/50 focus:border-brand-orange transition-all resize-none placeholder:text-slate-400 text-sm sm:text-base" 
+										className={`${inputBase} ${focusOrange} resize-none`}
 										placeholder="How can we help you?"
 									></textarea>
 								</div>
-								<button disabled={isSubmitting} type="submit" className="w-full group bg-brand-orange hover:bg-brand-orange/90 text-white py-4 sm:py-5 rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg shadow-xl shadow-brand-orange/25 flex items-center justify-center gap-2 sm:gap-3 transition-all duration-300 hover:scale-[1.02] active:scale-95 mt-2 sm:mt-4 disabled:opacity-70 disabled:pointer-events-none">
+
+								<button
+									disabled={isSubmitting}
+									type="submit"
+									className="w-full group bg-brand-orange hover:bg-brand-orange/90 text-white py-3.5 rounded-xl font-semibold text-base shadow-lg shadow-brand-orange/25 flex items-center justify-center gap-2 transition-all duration-300 hover:scale-[1.01] active:scale-95 disabled:opacity-70 disabled:pointer-events-none"
+								>
 									{isSubmitting ? (
 										<span className="flex items-center gap-2">
 											<svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -269,7 +317,7 @@ export default function ContactPage() {
 									) : (
 										<>
 											<span>Send Message</span>
-											<Send size={18} className="sm:w-5 sm:h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+											<Send size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
 										</>
 									)}
 								</button>
@@ -284,29 +332,29 @@ export default function ContactPage() {
 					whileInView="visible"
 					viewport={{ once: true, margin: "-100px" }}
 					variants={staggerContainer}
-					className="mt-32 pt-16 border-t border-slate-200 dark:border-slate-800"
+					className="mt-24 pt-14 border-t border-slate-200 dark:border-slate-800"
 				>
-					<div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-						<motion.div variants={fadeIn} className="space-y-6 sm:space-y-8 text-center lg:text-left">
-							<h3 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold">Connect With Us <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-brand-blue">Online</span></h3>
-							<p className="text-base sm:text-lg lg:text-xl text-foreground/70 leading-relaxed font-medium">
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+						<motion.div variants={fadeIn} className="space-y-5 text-center lg:text-left">
+							<h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight">Connect With Us <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-brand-blue">Online</span></h3>
+							<p className="text-sm sm:text-base lg:text-lg text-foreground/70 leading-relaxed">
 								Connect with us online by following us on Facebook, X, Instagram, YouTube, TikTok and WhatsApp. Whatever you choose to do, know that we love you and want to welcome you to the family.
 							</p>
-							<div className="flex flex-wrap gap-4 pt-4">
+							<div className="flex flex-wrap justify-center lg:justify-start gap-3 pt-2">
 								{[
-									{ name: 'Facebook', url: 'https://www.facebook.com/Gulu.Bible.Community.Church', icon: <Facebook size={18} /> },
-									{ name: 'X', url: 'https://x.com/gulubible', icon: <Twitter size={18} /> },
-									{ name: 'Instagram', url: 'https://instagram.com/', icon: <Instagram size={18} /> },
-									{ name: 'YouTube', url: 'https://www.youtube.com/@gulubiblecommunitychurch', icon: <Youtube size={18} /> },
-									{ name: 'TikTok', url: 'https://www.tiktok.com/@gulubiblecommunitychurch', icon: <Music size={18} /> },
-									{ name: 'WhatsApp', url: 'https://whatsapp.com/channel/0029VbAxEFIBlHplGKitLd0l', icon: <MessageCircle size={18} /> }
+									{ name: 'Facebook', url: 'https://www.facebook.com/Gulu.Bible.Community.Church', icon: <Facebook size={16} /> },
+									{ name: 'X', url: 'https://x.com/gulubible', icon: <Twitter size={16} /> },
+									{ name: 'Instagram', url: 'https://instagram.com/', icon: <Instagram size={16} /> },
+									{ name: 'YouTube', url: 'https://www.youtube.com/@gulubiblecommunitychurch', icon: <Youtube size={16} /> },
+									{ name: 'TikTok', url: 'https://www.tiktok.com/@gulubiblecommunitychurch', icon: <Music size={16} /> },
+									{ name: 'WhatsApp', url: 'https://whatsapp.com/channel/0029VbAxEFIBlHplGKitLd0l', icon: <MessageCircle size={16} /> }
 								].map((platform) => (
 									<a 
 										href={platform.url} 
 										target="_blank" 
 										rel="noopener noreferrer" 
 										key={platform.name} 
-										className="px-6 py-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl hover:border-brand-orange transition-all font-bold text-foreground/80 hover:text-brand-orange cursor-pointer hover:-translate-y-1 flex items-center gap-2"
+										className="px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-lg hover:border-brand-orange transition-all text-sm font-semibold text-foreground/80 hover:text-brand-orange cursor-pointer hover:-translate-y-1 flex items-center gap-2"
 									>
 										{platform.icon}
 										{platform.name}
@@ -314,9 +362,10 @@ export default function ContactPage() {
 								))}
 							</div>
 						</motion.div>
-						<motion.div variants={fadeIn} className="relative h-[500px] w-full rounded-[40px] overflow-hidden shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 group">
+						<motion.div variants={fadeIn} className="relative h-[380px] sm:h-[420px] w-full rounded-3xl overflow-hidden shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 group">
 							<div className="absolute inset-0 bg-brand-orange/5 pointer-events-none group-hover:bg-transparent transition-colors duration-500 z-10" />
 							<iframe 
+								title="Gulu Bible Community Church on the map"
 								src="https://maps.google.com/maps?q=GULU+BIBLE+COMMUNITY+CHURCH,+Airfield+Road,+Gulu&t=&z=15&ie=UTF8&iwloc=&output=embed" 
 								className="absolute inset-0 w-full h-full border-0 grayscale-[20%] group-hover:grayscale-0 transition-all duration-500"
 								allowFullScreen={true} 
