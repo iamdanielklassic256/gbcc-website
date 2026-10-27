@@ -8,7 +8,7 @@ import { useState } from "react";
 
 // shared input styles (colors unchanged: slate base, brand-orange / brand-blue focus)
 const inputBase =
-	"w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 outline-none transition-all placeholder:text-slate-400 text-sm";
+	"w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 outline-none transition-all placeholder:text-slate-400 text-sm sm:text-base";
 const focusOrange = "focus:ring-2 focus:ring-brand-orange/50 focus:border-brand-orange";
 const focusBlue = "focus:ring-2 focus:ring-brand-blue/50 focus:border-brand-blue";
 
@@ -17,7 +17,7 @@ const infoCard =
 	"group relative overflow-hidden p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-lg shadow-slate-200/50 dark:shadow-none hover:shadow-xl hover:-translate-y-1 transition-all duration-300";
 
 const Label = ({ htmlFor, children, required }: { htmlFor: string; children: React.ReactNode; required?: boolean }) => (
-	<label htmlFor={htmlFor} className="block text-sm font-medium text-foreground/70 mb-1.5">
+	<label htmlFor={htmlFor} className="block text-sm sm:text-base font-medium text-foreground/70 mb-1.5">
 		{children}
 		{required && <span className="text-brand-orange ml-0.5" aria-hidden>*</span>}
 	</label>
@@ -121,7 +121,7 @@ export default function ContactPage() {
 						<motion.h1 variants={fadeIn} className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4 text-white">
 							Get in <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-brand-blue">Touch</span>
 						</motion.h1>
-						<motion.p variants={fadeIn} className="text-sm sm:text-base md:text-lg text-white/70 leading-relaxed">
+						<motion.p variants={fadeIn} className="text-sm sm:text-base text-white/70 leading-relaxed">
 							Have questions? Want to learn more about our ministries? Our team is here to help and pray with you. Reach out through any of the channels below.
 						</motion.p>
 					</motion.div>
@@ -152,7 +152,7 @@ export default function ContactPage() {
 								href="https://maps.google.com/?q=GULU+BIBLE+COMMUNITY+CHURCH,+Airfield+Road,+Gulu"
 								target="_blank"
 								rel="noopener noreferrer"
-								className="inline-flex items-center gap-2 text-brand-orange font-semibold text-sm hover:gap-3 transition-all"
+								className="inline-flex items-center gap-2 text-brand-orange font-semibold text-sm sm:text-base hover:gap-3 transition-all"
 							>
 								Get Directions <ArrowRight size={16} />
 							</a>
@@ -187,10 +187,7 @@ export default function ContactPage() {
 								</div>
 								<h3 className="text-lg font-semibold mb-2">Email Us</h3>
 								<div className="space-y-2">
-									<a href="mailto:administrator@gulubcc.org" className="flex items-center gap-2 text-foreground/70 text-sm sm:text-base hover:text-brand-orange transition-colors break-all">
-										<div className="w-1.5 h-1.5 shrink-0 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-brand-orange transition-colors" />
-										administrator@gulubcc.org
-									</a>
+									
 									<a href="mailto:media@gulubcc.org" className="flex items-center gap-2 text-foreground/70 text-sm sm:text-base hover:text-brand-orange transition-colors break-all">
 										<div className="w-1.5 h-1.5 shrink-0 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-brand-orange transition-colors" />
 										media@gulubcc.org
@@ -215,7 +212,7 @@ export default function ContactPage() {
 							<div className="absolute top-[-50px] right-[-50px] w-[150px] h-[150px] bg-brand-orange/5 rounded-full blur-3xl pointer-events-none" />
 
 							<div className="mb-7 relative z-10">
-								<h2 className="text-lg sm:text-xl font-bold mb-1.5">Send a Message</h2>
+								<h2 className="text-2xl sm:text-3xl font-bold mb-1.5">Send a Message</h2>
 								<p className="text-foreground/60 text-sm sm:text-base">We typically reply within 24 hours.</p>
 							</div>
 
@@ -226,7 +223,7 @@ export default function ContactPage() {
 										aria-live="polite"
 										initial={{ opacity: 0, y: -10 }}
 										animate={{ opacity: 1, y: 0 }}
-										className={`p-3.5 rounded-xl text-sm font-medium shadow-sm ${status.type === 'success' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'}`}
+										className={`p-3.5 rounded-xl text-sm sm:text-base font-medium shadow-sm ${status.type === 'success' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'}`}
 									>
 										{status.message}
 									</motion.div>
@@ -304,7 +301,7 @@ export default function ContactPage() {
 								<button
 									disabled={isSubmitting}
 									type="submit"
-									className="w-full group bg-brand-orange hover:bg-brand-orange/90 text-white py-3.5 rounded-xl font-semibold text-base shadow-lg shadow-brand-orange/25 flex items-center justify-center gap-2 transition-all duration-300 hover:scale-[1.01] active:scale-95 disabled:opacity-70 disabled:pointer-events-none"
+									className="w-full group bg-brand-orange hover:bg-brand-orange/90 text-white py-3.5 rounded-xl font-semibold text-sm sm:text-base shadow-lg shadow-brand-orange/25 flex items-center justify-center gap-2 transition-all duration-300 hover:scale-[1.01] active:scale-95 disabled:opacity-70 disabled:pointer-events-none"
 								>
 									{isSubmitting ? (
 										<span className="flex items-center gap-2">
@@ -337,7 +334,7 @@ export default function ContactPage() {
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 						<motion.div variants={fadeIn} className="space-y-5 text-center lg:text-left">
 							<h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight">Connect With Us <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-brand-blue">Online</span></h3>
-							<p className="text-sm sm:text-base lg:text-lg text-foreground/70 leading-relaxed">
+							<p className="text-sm sm:text-base text-foreground/70 leading-relaxed">
 								Connect with us online by following us on Facebook, X, Instagram, YouTube, TikTok and WhatsApp. Whatever you choose to do, know that we love you and want to welcome you to the family.
 							</p>
 							<div className="flex flex-wrap justify-center lg:justify-start gap-3 pt-2">

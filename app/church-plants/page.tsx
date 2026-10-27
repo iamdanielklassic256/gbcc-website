@@ -12,6 +12,8 @@ export interface ChurchPlant {
 	id: string;
 	name: string;
 	location: string;
+	slug: string;
+	createdAt: string;
 	image?: string;
 	description: string;
 	isActive: boolean;
